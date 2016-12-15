@@ -34,8 +34,12 @@ open class TagControl: UIControl {
     public weak var delegate: TagActionDelegate?
     public weak var stateDelegate: TagStateDelegate?
     
+    private(set) var content: TagPresentable
+    public var enableSelect = false
+    
     // MARK: - init
-    public init() {
+    public required init(content: TagPresentable) {
+        self.content = content
         super.init(frame: CGRect.zero)
         
         clipsToBounds = true
@@ -59,20 +63,33 @@ open class TagControl: UIControl {
         }
     }
     
-    func stateDidChange(state: UIControlState) {
-        stateDelegate?.stateDidChange(state: state)
+    open override func layoutSubviews() {
+        updateContent()
+        
+        super.layoutSubviews()
     }
     
     func onTap() {
+        if enableSelect {
+            isSelected = !isSelected
+            content.isSelected = isSelected
+        }
         delegate?.tagActionTriggered(action: "tap")
     }
     
-    func setContent(content: String) {
+    func updateContent() {
         
     }
 }
 
-class TextTag: TagControl {
+extension TagControl: TagStateDelegate {
+
+    public func stateDidChange(state: UIControlState) {
+        stateDelegate?.stateDidChange(state: state)
+    }
+}
+
+class TextTagControl: TagControl {
     
     public var label = UILabel()
     
@@ -80,8 +97,8 @@ class TextTag: TagControl {
         return label.intrinsicContentSize
     }
     
-    override init() {
-        super.init()
+    public required init(content: TagPresentable) {
+        super.init(content: content)
         
         addSubview(label)
         
@@ -96,12 +113,14 @@ class TextTag: TagControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setContent(content: String) {
-        label.text = content
+    override func updateContent() {
+        super.updateContent()
+        
+        label.text = content.tag
     }
 }
 
-class IconTag: TagControl {
+class IconTagControl: TagControl {
     
     public var icon = UIImageView()
     public var height: CGFloat = 0
@@ -117,8 +136,8 @@ class IconTag: TagControl {
         return size
     }
     
-    override init() {
-        super.init()
+    public required init(content: TagPresentable) {
+        super.init(content: content)
         
         addSubview(icon)
         
@@ -134,12 +153,14 @@ class IconTag: TagControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setContent(content: String) {
-        icon.image = UIImage(named: content)
+    override func updateContent() {
+        super.updateContent()
+        
+        icon.image = UIImage(named: content.tag)
     }
 }
 
-class IconTextTag: TagControl {
+class IconTextTagControl: TagControl {
     
     public var icon = UIImageView()
     public var label = UILabel()
@@ -157,8 +178,8 @@ class IconTextTag: TagControl {
         return CGSize(width: imageSize.width + labelSize.height + space, height: labelSize.height)
     }
     
-    override init() {
-        super.init()
+    public required init(content: TagPresentable) {
+        super.init(content: content)
         
         addSubview(icon)
         addSubview(label)
@@ -179,8 +200,10 @@ class IconTextTag: TagControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setContent(content: String) {
-        icon.image = UIImage(named: content)
-        label.text = content
+    override func updateContent() {
+        super.updateContent()
+        
+        icon.image = UIImage(named: content.tag)
+        label.text = content.tag
     }
 }

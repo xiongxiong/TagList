@@ -8,56 +8,51 @@
 
 import UIKit
 
-protocol TagDescriptable {
+public protocol TagDelegate: NSObjectProtocol {
     
-    var tagContent: String { get }
+    func tagActionTriggered(action: String, content: TagPresentable)
 }
 
-protocol TagDelegate: NSObjectProtocol {
-    
-    func tagActionTriggered(action: String, tagContent: String)
-}
-
-open class Tag: UIView, TagDescriptable {
+open class Tag: UIView {
 
     public weak var delegate: TagDelegate?
     
-    var tagContent: String = "" {
-        didSet {
-            tagControl.setContent(content: tagContent)
-        }
-    }
-    var wrappers: [TagWrapper] = [] {
-        didSet {
-            wrappers.forEach { (wrapper) in
-                wrapper.delegate = self
-                wrapped = wrapper.wrap
-            }
-        }
-    }
-    var padding: UIEdgeInsets = UIEdgeInsets.zero
-    var margin: UIEdgeInsets = UIEdgeInsets.zero
+    public var wrappers: [TagWrapper] = []
+    public var padding: UIEdgeInsets = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
     
-    var tagControl: TagControl = TagControl() {
-        didSet {
-            
-        }
-    }
-    var wrapped: TagWrapper!
+    private(set) var content: TagPresentable
+    private var tagControl: TagControl!
+    private var wrapped: TagWrapper!
     
-    override var intrinsicContentSize: CGSize {
+    open override var intrinsicContentSize: CGSize {
         let size = wrapped.intrinsicContentSize
         return CGSize(width: size.width + padding.left + padding.right, height: size.height + padding.top + padding.bottom)
     }
     
-    init(content: String) {
-        self.tagContent = content
+    init(content: TagPresentable, type: TagControl.Type) {
+        self.content = content
         super.init(frame: CGRect.zero)
         
-        tagControl = CustomTag(content: content)
-        wrapped = wrappers.reduce(tagControl, { (result, wrapper) -> UIView in
-            wrapper.wrap(target: result)
-        })
+        tagControl = type.init(content: content)
+        wrapped = TagWrapper().wrap(target: tagControl)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    open override func layoutSubviews() {
+        updateContent()
+        
+        super.layoutSubviews()
+    }
+    
+    public func updateContent() {
+        wrapped.removeFromSuperview()
+        
+        wrapped = wrappers.reduce(wrapped) { (result, wrapper) in
+            wrapper.wrap(target: wrapped)
+        }
         
         addSubview(wrapped)
         wrapped.translatesAutoresizingMaskIntoConstraints = false
@@ -66,15 +61,11 @@ open class Tag: UIView, TagDescriptable {
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: padding.top))
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: padding.bottom * -1))
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension Tag: TagActionDelegate {
     
-    func tagActionTriggered(action: String) {
-        <#code#>
+    public func tagActionTriggered(action: String) {
+        delegate?.tagActionTriggered(action: action, content: content)
     }
 }

@@ -8,21 +8,29 @@
 
 import UIKit
 
-open class TagWrapper: UIView {
+protocol TagWrapperDelegate {
+    
+    var delegate: TagActionDelegate? { get set }
+    var stateDelegate: TagStateDelegate? { get set }
+    
+    func wrap<T : UIView>(target: T) -> TagWrapper where T : TagStateDelegate
+}
+
+open class TagWrapper: UIView, TagWrapperDelegate {
     
     public weak var delegate: TagActionDelegate?
     public weak var stateDelegate: TagStateDelegate?
     
-    var content: UIView?
+    var target: UIView?
     
     @discardableResult
-    public func wrap<T: UIView>(content: T) -> TagWrapper where T: TagStateDelegate {
-        self.content = content
-        content.stateDelegate = self
+    public func wrap<T: UIView>(target: T) -> TagWrapper where T: TagStateDelegate {
+        self.target = target
+        target.stateDelegate = self
         
         removeConstraints(constraints)
-        addSubview(content)
-        content.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(target)
+        target.translatesAutoresizingMaskIntoConstraints = false
         
         return self
     }
@@ -41,8 +49,8 @@ open class TagWrapperRemover: TagWrapper {
     var space: CGFloat = 8
     
     open override var intrinsicContentSize: CGSize {
-        let contentSize = content?.intrinsicContentSize ?? CGSize.zero
-        return CGSize(width: contentSize.width + space + contentSize.height, height: contentSize.height)
+        let targetSize = target?.intrinsicContentSize ?? CGSize.zero
+        return CGSize(width: targetSize.width + space + targetSize.height, height: targetSize.height)
     }
     
     init() {
@@ -59,8 +67,8 @@ open class TagWrapperRemover: TagWrapper {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func wrap(content: UIView) -> UIView {
-        super.wrap(content: content)
+    public override func wrap<T : UIView>(target: T) -> TagWrapper where T : TagStateDelegate {
+        super.wrap(target: target)
         
         addConstraint(NSLayoutConstraint(item: target, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: target, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))

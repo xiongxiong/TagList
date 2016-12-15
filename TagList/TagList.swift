@@ -8,162 +8,153 @@
 
 import UIKit
 
-public protocol TagListActionDelegate: NSObjectProtocol {
+public protocol TagListDelegate: NSObjectProtocol {
     
-    func tagPressed(tagView: TagControl, index: Int)
+    func tagActionTriggered(action: String, content: TagPresentable, index: Int)
 }
 
-@IBDesignable
 open class TagList: UIView {
     
-    @IBInspectable open var alignment: TagAlignment = .left
+    public weak var delegate: TagListDelegate?
     
-    public weak var delegate: TagListActionDelegate?
+    public var alignment: TagAlignment = .left
     public var tagMargin = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
-    public var useSeparator = true
-    public var separator = UIImageView()
-    public var separatorMargin = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 15)
+    public var separatorWrapper = SeparatorWrapper()
+    public var isTagSeparated = true
+    public var isTagSelectable = false
 
-    open var tagControls: [TagControl] = []
-    private(set) var tagViews: [UIView] = []
-    private(set) var rows: [(tagViews: [UIView], height: CGFloat)] = []
+    private var tagData: [(content: TagPresentable, type: TagControl.Type)] = []
+    private var rows: [(tagViews: [UIView], height: CGFloat)] = []
+    private var tagViews: [UIView] = []
+    
+    public var tags: [TagPresentable] {
+        return tagData.map({ (content, _) -> TagPresentable in
+            content
+        })
+    }
+    open override var intrinsicContentSize: CGSize {
+        let height = rows.reduce(0) { (result, row) -> CGFloat in
+            result + row.height
+        }
+        return CGSize(width: frame.width, height: height)
+    }
+    public var stripeSize: CGSize {
+        return tagViews.reduce(CGSize.zero) { (result, view) -> CGSize in
+            let width = result.width + view.intrinsicContentSize.width + tagMargin.left + tagMargin.right
+            let height = max(result.height, view.intrinsicContentSize.height)
+            return CGSize(width: width, height: height)
+        }
+    }
     
     // MARK: - Layout
     
     open override func layoutSubviews() {
         super.layoutSubviews()
         
-        tagViews.forEach { (view) in
+        rows = []
+        subviews.forEach { (view) in
             view.removeFromSuperview()
         }
-        rows = []
         
-        tagViews = tagControls.map { (tagControl) -> UIView in
-            wrapTag(tagControl)
-        }
-        if useSeparator {
-            tagViews = tagViews.enumerated().map({ (index, tagView) -> UIView in
-                if index < tagViews.count - 1 {
-                    return TagWrapperSeparator().wrap(target: tagView)
-                } else {
-                    return tagView
-                }
-            })
+        tagViews = tagData.enumerated().map { (index, data) -> UIView in
+            var tagView: UIView = Tag(content: data.content, type: data.type)
+            if isTagSeparated && index < tagData.count - 1 {
+                tagView = SeparatorWrapper().wrap(tagView)
+            }
+            return tagView
         }
         tagViews.enumerated().forEach { (index, tagView) in
             let rowIndex = (rows.count - 1) > 0 ? rows.count - 1 : 0
             let accumulatedWidth = rows[rowIndex].tagViews.reduce(0) { (result, tagView) -> CGFloat in
                 result + tagView.intrinsicContentSize.width + tagMargin.left + tagMargin.right
             }
+            let tagViewSurroundSize = getSurroundSize(view: tagView)
+            if tagViewSurroundSize.width + accumulatedWidth > frame.width {
+                rows.append(([tagView], tagViewSurroundSize.height))
+            } else {
+                rows[rowIndex].tagViews.append(tagView)
+                rows[rowIndex].height = max(rows[rowIndex].height, tagViewSurroundSize.height)
+            }
         }
-    }
-    
-    func wrapTag(_ tagControl: TagControl) -> UIView {
-        return tagControl.wrapper(TagWrapperRemover())
-    }
-    
-    private func rearrangeViews() {
-            
-//            switch alignment {
-//            case .left:
-//                currentRowView.frame.origin.x = 0
-//            case .center:
-//                currentRowView.frame.origin.x = (frame.width - (currentRowWidth - marginX)) / 2
-//            case .right:
-//                currentRowView.frame.origin.x = frame.width - (currentRowWidth - marginX)
-//            }
-//            currentRowView.frame.size.width = currentRowWidth
-//            currentRowView.frame.size.height = max(tagViewHeight, currentRowView.frame.height)
-//        }
-//        rows = currentRow
-//        
-//        invalidateIntrinsicContentSize()
+        rows.enumerated().forEach { (rowIndex, row) in
+            let accumulatedHeight = rows.enumerated().reduce(0) { (result, row) in
+                result + (row.offset < rowIndex ? row.element.height : 0)
+            }
+            row.tagViews.enumerated().forEach({ (tagIndex, tagView) in
+                addSubview(tagView)
+                tagView.translatesAutoresizingMaskIntoConstraints = false
+                addConstraint(NSLayoutConstraint(item: tagView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: accumulatedHeight + row.height / 2))
+                if tagIndex == 0 {
+                    switch alignment {
+                    case .left:
+                        addConstraint(NSLayoutConstraint(item: tagView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: tagMargin.left))
+                    case .right:
+                        addConstraint(NSLayoutConstraint(item: tagView, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: tagMargin.left))
+                    case .center:
+                        let rowWidth = rows[rowIndex].tagViews.reduce(0) { (result, tagView) in
+                            result + getSurroundSize(view: tagView).width
+                        }
+                        let spaceLeading = (frame.width - rowWidth) / 2
+                        addConstraint(NSLayoutConstraint(item: tagView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: spaceLeading))
+                    }
+                } else {
+                    let viewPrevious = row.tagViews[tagIndex - 1]
+                    addConstraint(NSLayoutConstraint(item: tagView, attribute: .centerY, relatedBy: .equal, toItem: viewPrevious, attribute: .centerY, multiplier: 1, constant: 0))
+                    addConstraint(NSLayoutConstraint(item: tagView, attribute: .leading, relatedBy: .equal, toItem: viewPrevious, attribute: .trailing, multiplier: 1, constant: tagMargin.left + tagMargin.right))
+                }
+            })
+        }
     }
     
     // MARK: - Manage tags
     
-    override open var intrinsicContentSize: CGSize {
-        let height = rows.reduce(0) { (result, row) -> CGFloat in
-            result + row.height
-        }
-        return CGSize(width: frame.width, height: height)
+    public func setTags(_ tagData: [(content: TagPresentable, type: TagControl.Type)]) {
+        self.tagData = tagData
     }
     
-//    @discardableResult
-//    open func addTag(_ title: String) -> TagControl {
-//        return addTagControl(createNewTagControl(title))
-//    }
-//    
-//    @discardableResult
-//    open func insertTag(_ title: String, at index: Int) -> TagControl {
-//        return insertTagControl(createNewTagControl(title), at: index)
-//    }
-//    
-//    @discardableResult
-//    open func addTagControl(_ tagView: TagControl) -> TagControl {
-//        tagViews.append(tagView)
-//        tagBackgroundViews.append(UIView(frame: tagView.bounds))
-//        rearrangeViews()
-//        
-//        return tagView
-//    }
-//    
-//    @discardableResult
-//    open func insertTagControl(_ tagView: TagControl, at index: Int) -> TagControl {
-//        tagViews.insert(tagView, at: index)
-//        tagBackgroundViews.insert(UIView(frame: tagView.bounds), at: index)
-//        rearrangeViews()
-//        
-//        return tagView
-//    }
-//    
-//    open func removeTag(_ title: String) {
-//        // loop the array in reversed order to remove items during loop
-//        for index in stride(from: (tagViews.count - 1), through: 0, by: -1) {
-//            let tagView = tagViews[index]
-//            if tagView.currentTitle == title {
-//                removeTagControl(tagView)
-//            }
-//        }
-//    }
-//    
-//    open func removeTagControl(_ tagView: TagControl) {
-//        tagView.removeFromSuperview()
-//        if let index = tagViews.index(of: tagView) {
-//            tagViews.remove(at: index)
-//            tagBackgroundViews.remove(at: index)
-//        }
-//        
-//        rearrangeViews()
-//    }
-//    
-//    open func removeAllTags() {
-//        let views = tagViews as [UIView] + tagBackgroundViews
-//        for view in views {
-//            view.removeFromSuperview()
-//        }
-//        tagViews = []
-//        tagBackgroundViews = []
-//        rearrangeViews()
-//    }
-//    
-//    open func selectedTags() -> [TagControl] {
-//        return tagViews.filter() { $0.isSelected == true }
-//    }
-//    
-//    // MARK: - Events
-//    
-//    func tagPressed(_ sender: TagControl!) {
-//        sender.onTap?(sender)
-//        delegate?.tagPressed?(sender.currentTitle ?? "", tagView: sender, sender: self)
-//    }
-//    
-//    func removeButtonPressed(_ closeButton: CloseButton!) {
-//        if let tagView = closeButton.tagView {
-//            delegate?.tagRemoveButtonPressed?(tagView.currentTitle ?? "", tagView: tagView, sender: self)
-//        }
-//    }
+    public func appendTag(_ content: TagPresentable, type: TagControl.Type = TextTagControl.self) {
+        tagData.append((content, type))
+    }
     
+    public func insertTag(_ content: TagPresentable, at index: Int, type: TagControl.Type = TextTagControl.self) {
+        tagData.insert((content, type), at: index)
+    }
+
+    public func removeTag(_ content: TagPresentable) {
+        if let index = index(of: content) {
+            tagData.remove(at: index)
+        }
+    }
+    
+    public func removeAllTags() {
+        self.tagData = []
+    }
+
+    public func selectedTags() -> [TagPresentable] {
+        return tags.filter {
+            $0.isSelected
+        }
+    }
+    
+    // MARK: - Custom
+    public func index(of content: TagPresentable) -> Int? {
+        return tagData.index(where: {
+            $0.content.tag == content.tag
+        })
+    }
+    
+    func getSurroundSize(view: UIView) -> CGSize {
+        return CGSize(width: view.intrinsicContentSize.width + tagMargin.left + tagMargin.right, height: view.intrinsicContentSize.height + tagMargin.top + tagMargin.bottom)
+    }
+}
+
+extension TagList: TagDelegate {
+    
+    public func tagActionTriggered(action: String, content: TagPresentable) {
+        if let index = index(of: content) {
+            delegate?.tagActionTriggered(action: action, content: content, index: index)
+        }
+    }
 }
 
 public enum TagAlignment {
@@ -171,9 +162,4 @@ public enum TagAlignment {
     case left
     case center
     case right
-}
-
-public enum WrapperType {
-    
-    case remover
 }

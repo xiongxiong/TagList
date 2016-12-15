@@ -17,6 +17,8 @@
 		420671761DFF9EFA0075B70F /* TagWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671751DFF9EFA0075B70F /* TagWrapper.swift */; };
 		4206717B1DFFC96D0075B70F /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4206717A1DFFC96D0075B70F /* UIView.swift */; };
 		42AF1F441E01124F0048417E /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AF1F431E01124F0048417E /* Tag.swift */; };
+		42F1236F1E02602F00CA0DED /* SeparatorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */; };
+		42F123711E02605C00CA0DED /* TagPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F123701E02605C00CA0DED /* TagPresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		420671751DFF9EFA0075B70F /* TagWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagWrapper.swift; sourceTree = "<group>"; };
 		4206717A1DFFC96D0075B70F /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		42AF1F431E01124F0048417E /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorWrapper.swift; sourceTree = "<group>"; };
+		42F123701E02605C00CA0DED /* TagPresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,9 +84,11 @@
 			isa = PBXGroup;
 			children = (
 				420671791DFFC9610075B70F /* Extension */,
-				420671711DFF92A60075B70F /* TagList.swift */,
+				42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */,
 				42AF1F431E01124F0048417E /* Tag.swift */,
 				420671731DFF92B80075B70F /* TagControl.swift */,
+				420671711DFF92A60075B70F /* TagList.swift */,
+				42F123701E02605C00CA0DED /* TagPresentable.swift */,
 				420671751DFF9EFA0075B70F /* TagWrapper.swift */,
 			);
 			name = TagList;
@@ -172,9 +178,11 @@
 				420671741DFF92B80075B70F /* TagControl.swift in Sources */,
 				420671721DFF92A60075B70F /* TagList.swift in Sources */,
 				420671761DFF9EFA0075B70F /* TagWrapper.swift in Sources */,
+				42F1236F1E02602F00CA0DED /* SeparatorWrapper.swift in Sources */,
 				42AF1F441E01124F0048417E /* Tag.swift in Sources */,
 				4206717B1DFFC96D0075B70F /* UIView.swift in Sources */,
 				420671611DFF8C090075B70F /* ViewController.swift in Sources */,
+				42F123711E02605C00CA0DED /* TagPresentable.swift in Sources */,
 				4206715F1DFF8C090075B70F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
