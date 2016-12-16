@@ -79,7 +79,7 @@ extension TagControl: TagStateDelegate {
     }
 }
 
-public class TextTagControl: TagControl {
+public class TagControlText: TagControl {
     
     public var label = UILabel()
     
@@ -106,7 +106,7 @@ public class TextTagControl: TagControl {
     }
 }
 
-public class IconTagControl: TagControl {
+public class TagControlIcon: TagControl {
     
     public var icon = UIImageView()
     public var height: CGFloat = 0
@@ -142,7 +142,7 @@ public class IconTagControl: TagControl {
     }
 }
 
-public class IconTextTagControl: TagControl {
+public class TagControlIconText: TagControl {
     
     public var icon = UIImageView()
     public var label = UILabel()

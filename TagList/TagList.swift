@@ -17,20 +17,15 @@ open class TagList: UIView {
     
     public weak var delegate: TagListDelegate?
     
+    public dynamic var tags: [Tag] = []
     public var alignment: TagAlignment = .left
-    public var tagMargin = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
+    public var tagMargin = UIEdgeInsets.zero
     public var separatorWrapper = SeparatorWrapper()
     public var isTagSeparated = false
     public var isTagSelectable = false
 
-    private var tagData: [(content: TagPresentable, type: TagControl.Type)] = []
     private var rows: [(tagViews: [UIView], height: CGFloat)] = []
     
-    public var tags: [TagPresentable] {
-        return tagData.map({ (content, _) -> TagPresentable in
-            content
-        })
-    }
     open override var intrinsicContentSize: CGSize {
         let height = rows.reduce(0) { (result, row) -> CGFloat in
             result + row.height
@@ -46,9 +41,32 @@ open class TagList: UIView {
         }
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addObserver(self, forKeyPath: "tags", options: [.initial, .new], context: nil)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        removeObserver(self, forKeyPath: "tags")
+    }
+    
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        switch keyPath {
+        case .some("tags"):
+            update()
+        default:
+            break
+        }
+    }
+    
     // MARK: - Layout
     
-    func updateTagViews() {
+    func update() {
         rows = []
         subviews.forEach { (view) in
             view.removeFromSuperview()
@@ -107,14 +125,14 @@ open class TagList: UIView {
                             result + getSurroundSize(view: tagView).width
                         }
                         let spaceLeading = (frame.width - rowWidth) / 2
-                        rowView.addConstraint(NSLayoutConstraint(item: tagView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: spaceLeading))
+                        rowView.addConstraint(NSLayoutConstraint(item: tagView, attribute: .leading, relatedBy: .equal, toItem: rowView, attribute: .leading, multiplier: 1, constant: spaceLeading))
                     }
                 } else {
                     switch alignment {
                     case .left, .center:
                         rowView.addConstraint(NSLayoutConstraint(item: tagView, attribute: .leading, relatedBy: .equal, toItem: row.tagViews[tagIndex - 1], attribute: .trailing, multiplier: 1, constant: tagMargin.left + tagMargin.right))
                     case .right:
-                        rowView.addConstraint(NSLayoutConstraint(item: tagView, attribute: .trailing, relatedBy: .equal, toItem: row.tagViews[tagIndex - 1], attribute: .trailing, multiplier: 1, constant: (tagMargin.left + tagMargin.right) * -1))
+                        rowView.addConstraint(NSLayoutConstraint(item: tagView, attribute: .trailing, relatedBy: .equal, toItem: row.tagViews[tagIndex - 1], attribute: .leading, multiplier: 1, constant: (tagMargin.left + tagMargin.right) * -1))
                     }
                 }
             })
@@ -123,53 +141,43 @@ open class TagList: UIView {
     
     // MARK: - Manage tags
     
-    public func setTags(_ tagData: [(content: TagPresentable, type: TagControl.Type)]) {
-        self.tagData = tagData
-        updateTagViews()
+    public func appendTag(_ tag: Tag) {
+        tags.append(tag)
     }
     
-    public func appendTag(_ content: TagPresentable, type: TagControl.Type = TextTagControl.self) {
-        tagData.append((content, type))
-        updateTagViews()
-    }
-    
-    public func insertTag(_ content: TagPresentable, at index: Int, type: TagControl.Type = TextTagControl.self) {
-        tagData.insert((content, type), at: index)
-        updateTagViews()
+    public func insertTag(_ tag: Tag, at index: Int) {
+        tags.insert(tag, at: index)
     }
 
     public func removeTag(_ content: TagPresentable) {
         if let index = index(of: content) {
-            tagData.remove(at: index)
-            updateTagViews()
+            tags.remove(at: index)
         }
     }
     
     public func removeAllTags() {
-        self.tagData = []
-        updateTagViews()
+        self.tags = []
     }
 
-    public func selectedTags() -> [TagPresentable] {
+    public func selectedTags() -> [Tag] {
         return tags.filter {
-            $0.isSelected
+            $0.content.isSelected == true
         }
     }
     
     // MARK: - Custom
     
     public func index(of content: TagPresentable) -> Int? {
-        return tagData.index(where: {
+        return tags.index(where: {
             $0.content.tag == content.tag
         })
     }
     
     func getTagViews() -> [UIView] {
-        return tagData.enumerated().map { (index, data) -> UIView in
-            let theTag = Tag(content: data.content, type: data.type)
-            theTag.delegate = self
-            var tagView: UIView = theTag
-            if isTagSeparated && index < tagData.count - 1 {
+        return tags.enumerated().map { (index, tag) -> UIView in
+            tag.delegate = self
+            var tagView: UIView = tag
+            if isTagSeparated && index < tags.count - 1 {
                 tagView = SeparatorWrapper().wrap(tagView)
             }
             return tagView

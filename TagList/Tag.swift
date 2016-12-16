@@ -17,11 +17,11 @@ open class Tag: UIView {
 
     public weak var delegate: TagDelegate?
     
+    public var content: TagPresentable
     public var type: TagControl.Type
     public var wrappers: [TagWrapper] = []
-    public var padding: UIEdgeInsets = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
+    public var padding: UIEdgeInsets = UIEdgeInsets.zero
     
-    private(set) var content: TagPresentable
     private var tagControl: TagControl!
     private var wrapped: TagWrapper!
     
