@@ -10,16 +10,6 @@ import UIKit
 
 public protocol TagPresentable {
     
-    var tag: String { get set }
+    var tag: String { get }
     var isSelected: Bool { get set }
-}
-
-public class TagPresentableText: TagPresentable {
-
-    public var tag: String = ""
-    public var isSelected: Bool = false
-    
-    init(_ tag: String) {
-        self.tag = tag
-    }
 }

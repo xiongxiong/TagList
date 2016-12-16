@@ -15,12 +15,17 @@ class ViewController: UIViewController {
     var btnAdd = UIButton()
     var btnMod = UIButton()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(tagList)
         tagList.alignment = .center
         tagList.tagMargin = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
+        tagList.isTagSeparated = true
+        tagList.separator.icon = #imageLiteral(resourceName: "icon_arrow_right")
+        tagList.separator.size = CGSize(width: 16, height: 16)
+        tagList.separator.margin = UIEdgeInsets(top: 30, left: 8, bottom: 30, right: 15)
         tagList.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraint(NSLayoutConstraint(item: tagList, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: tagList, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
@@ -55,9 +60,9 @@ class ViewController: UIViewController {
         let tag = Tag(content: TagPresentableText(tagStr), type: TagControlText.self)
         tag.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
         tag.backgroundColor = UIColor.orange
-        tag.borderColor = UIColor.gray
-        tag.borderWidth = 0.5
-        tag.cornerRadius = 5
+        tag.bear_borderColor = UIColor.white
+        tag.bear_borderWidth = 1
+        tag.bear_cornerRadius = 5
         tagList.appendTag(tag)
         tagList.backgroundColor = UIColor.green
         tagList.setNeedsLayout()
@@ -65,10 +70,6 @@ class ViewController: UIViewController {
     }
     
     func modify() {
-        if tagList.tags.count > 0 {
-            tagList.tags.first?.content.tag += "hello_"
-        }
-        tagList.setNeedsLayout()
-        tagList.layoutIfNeeded()
+        tagList.tags.last?.content = TagPresentableText("----------")
     }
 }

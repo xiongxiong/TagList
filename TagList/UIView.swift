@@ -2,25 +2,24 @@
 //  UIView.swift
 //  TagList
 //
-//  Created by 王继荣 on 13/12/2016.
+//  Created by 王继荣 on 16/12/2016.
 //  Copyright © 2016 wonderbear. All rights reserved.
 //
 
 import UIKit
 
-extension UIView {
-    
-    @IBInspectable var cornerRadius: CGFloat {
+extension UIView
+{
+    var bear_cornerRadius: CGFloat {
         get {
             return layer.cornerRadius
         }
         set {
             layer.cornerRadius = newValue
-            layer.masksToBounds = newValue > 0
         }
     }
     
-    @IBInspectable var borderWidth: CGFloat {
+    var bear_borderWidth: CGFloat {
         get {
             return layer.borderWidth
         }
@@ -29,7 +28,7 @@ extension UIView {
         }
     }
     
-    @IBInspectable var borderColor: UIColor? {
+    var bear_borderColor: UIColor? {
         get {
             if let color = layer.borderColor {
                 return UIColor(cgColor: color)
@@ -38,11 +37,12 @@ extension UIView {
             }
         }
         set {
-            if let color = newValue {
-                layer.borderColor = color.cgColor
-            } else {
-                layer.borderColor = nil
-            }
+            layer.borderColor = newValue?.cgColor
         }
+    }
+    
+    func bear_copy() -> UIView?
+    {
+        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? UIView
     }
 }
