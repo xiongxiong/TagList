@@ -43,7 +43,6 @@ open class TagControl: UIControl {
         
         clipsToBounds = true
         addObserver(self, forKeyPath: "state", options: [.initial, .new], context: nil)
-        addObserver(self, forKeyPath: "content.tag", options: [.initial, .new], context: nil)
         addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
     
@@ -53,7 +52,6 @@ open class TagControl: UIControl {
     
     deinit {
         removeObserver(self, forKeyPath: "state")
-        removeObserver(self, forKeyPath: "content.tag")
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

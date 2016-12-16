@@ -20,7 +20,7 @@ open class TagList: UIView {
     public dynamic var tags: [Tag] = []
     public var alignment: TagAlignment = .left
     public var tagMargin = UIEdgeInsets.zero
-    public var separatorWrapper = SeparatorWrapper()
+    public var separator: SeparatorInfo = SeparatorInfo()
     public var isTagSeparated = false
     public var isTagSelectable = false
 
@@ -154,10 +154,6 @@ open class TagList: UIView {
             tags.remove(at: index)
         }
     }
-    
-    public func removeAllTags() {
-        self.tags = []
-    }
 
     public func selectedTags() -> [Tag] {
         return tags.filter {
@@ -178,7 +174,8 @@ open class TagList: UIView {
             tag.delegate = self
             var tagView: UIView = tag
             if isTagSeparated && index < tags.count - 1 {
-                tagView = SeparatorWrapper().wrap(tagView)
+                let wrapper = SeparatorWrapper(info: separator)
+                tagView = wrapper.wrap(tagView)
             }
             return tagView
         }
@@ -190,6 +187,10 @@ open class TagList: UIView {
 }
 
 extension TagList: TagDelegate {
+    
+    public func tagUpdated() {
+        update()
+    }
     
     public func tagActionTriggered(action: String, content: TagPresentable) {
         if let index = index(of: content) {

@@ -10,6 +10,7 @@ import UIKit
 
 public protocol TagDelegate: NSObjectProtocol {
     
+    func tagUpdated()
     func tagActionTriggered(action: String, content: TagPresentable)
 }
 
@@ -17,10 +18,26 @@ open class Tag: UIView {
 
     public weak var delegate: TagDelegate?
     
-    public var content: TagPresentable
-    public var type: TagControl.Type
-    public var wrappers: [TagWrapper] = []
-    public var padding: UIEdgeInsets = UIEdgeInsets.zero
+    public var content: TagPresentable {
+        didSet {
+            update()
+        }
+    }
+    public var type: TagControl.Type {
+        didSet {
+            update()
+        }
+    }
+    public var wrappers: [TagWrapper] = [] {
+        didSet {
+            update()
+        }
+    }
+    public var padding: UIEdgeInsets = UIEdgeInsets.zero {
+        didSet {
+            update()
+        }
+    }
     
     private var tagControl: TagControl!
     private var wrapped: TagWrapper!
@@ -35,6 +52,18 @@ open class Tag: UIView {
         self.type = type
         super.init(frame: CGRect.zero)
         
+        update()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func update() {
+        subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+        
         tagControl = type.init(content: content)
         tagControl.delegate = self
         
@@ -47,10 +76,8 @@ open class Tag: UIView {
         wrapped.translatesAutoresizingMaskIntoConstraints = false
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        
+        delegate?.tagUpdated()
     }
 }
 

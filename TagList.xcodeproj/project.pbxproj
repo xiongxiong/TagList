@@ -15,6 +15,7 @@
 		420671721DFF92A60075B70F /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671711DFF92A60075B70F /* TagList.swift */; };
 		420671741DFF92B80075B70F /* TagControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671731DFF92B80075B70F /* TagControl.swift */; };
 		420671761DFF9EFA0075B70F /* TagWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671751DFF9EFA0075B70F /* TagWrapper.swift */; };
+		420B57FB1E03DCBF0093E0D7 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420B57FA1E03DCBF0093E0D7 /* UIView.swift */; };
 		4226ABFA1E03B8D600AD40D2 /* TagControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABF91E03B8D600AD40D2 /* TagControls.swift */; };
 		4226ABFC1E03B90000AD40D2 /* TagPresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABFB1E03B90000AD40D2 /* TagPresentables.swift */; };
 		4226ABFE1E03B92A00AD40D2 /* TagWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */; };
@@ -34,6 +35,7 @@
 		420671711DFF92A60075B70F /* TagList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
 		420671731DFF92B80075B70F /* TagControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagControl.swift; sourceTree = "<group>"; };
 		420671751DFF9EFA0075B70F /* TagWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagWrapper.swift; sourceTree = "<group>"; };
+		420B57FA1E03DCBF0093E0D7 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4226ABF91E03B8D600AD40D2 /* TagControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagControls.swift; sourceTree = "<group>"; };
 		4226ABFB1E03B90000AD40D2 /* TagPresentables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPresentables.swift; sourceTree = "<group>"; };
 		4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagWrappers.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		420671701DFF909C0075B70F /* TagList */ = {
 			isa = PBXGroup;
 			children = (
+				420B57F91E03DCB00093E0D7 /* Extension */,
 				42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */,
 				42AF1F431E01124F0048417E /* Tag.swift */,
 				420671711DFF92A60075B70F /* TagList.swift */,
@@ -98,6 +101,14 @@
 				4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */,
 			);
 			name = TagList;
+			sourceTree = "<group>";
+		};
+		420B57F91E03DCB00093E0D7 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				420B57FA1E03DCBF0093E0D7 /* UIView.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +188,7 @@
 				420671721DFF92A60075B70F /* TagList.swift in Sources */,
 				4226ABFC1E03B90000AD40D2 /* TagPresentables.swift in Sources */,
 				420671761DFF9EFA0075B70F /* TagWrapper.swift in Sources */,
+				420B57FB1E03DCBF0093E0D7 /* UIView.swift in Sources */,
 				42F1236F1E02602F00CA0DED /* SeparatorWrapper.swift in Sources */,
 				42AF1F441E01124F0048417E /* Tag.swift in Sources */,
 				4226ABFA1E03B8D600AD40D2 /* TagControls.swift in Sources */,

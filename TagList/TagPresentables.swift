@@ -10,7 +10,7 @@ import UIKit
 
 public class TagPresentableText: TagPresentable {
     
-    public var tag: String = ""
+    public private(set) var tag: String = ""
     public var isSelected: Bool = false
     
     init(_ tag: String) {
