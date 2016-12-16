@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var btnAdd = UIButton()
     var btnMod = UIButton()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,9 +56,9 @@ class ViewController: UIViewController {
         let tag = Tag(content: TagPresentableText(tagStr), type: TagControlText.self)
         tag.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
         tag.backgroundColor = UIColor.orange
-        tag.borderColor = UIColor.gray
-        tag.borderWidth = 0.5
-        tag.cornerRadius = 5
+        tag.layer.borderColor = UIColor.black.cgColor
+        tag.layer.borderWidth = 0.5
+        tag.layer.cornerRadius = 5
         tagList.appendTag(tag)
         tagList.backgroundColor = UIColor.green
         tagList.setNeedsLayout()
@@ -65,10 +66,15 @@ class ViewController: UIViewController {
     }
     
     func modify() {
-        if tagList.tags.count > 0 {
-            tagList.tags.first?.content.tag += "hello_"
+        tagList.tags.forEach { (tag) in
+            print("before -- \(tag.content.tag)")
         }
-        tagList.setNeedsLayout()
-        tagList.layoutIfNeeded()
+        tagList.tags.forEach { (tag) in
+            tagList.tags.first?.content.tag += "_"
+        }
+        tagList.tags.forEach { (tag) in
+            print("after -- \(tag.content.tag)")
+        }
+        tagList.update()
     }
 }
