@@ -17,6 +17,7 @@ open class Tag: UIView {
 
     public weak var delegate: TagDelegate?
     
+    public var type: TagControl.Type
     public var wrappers: [TagWrapper] = []
     public var padding: UIEdgeInsets = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
     
@@ -31,35 +32,25 @@ open class Tag: UIView {
     
     init(content: TagPresentable, type: TagControl.Type) {
         self.content = content
+        self.type = type
         super.init(frame: CGRect.zero)
         
         tagControl = type.init(content: content)
+        tagControl.delegate = self
+        
         wrapped = TagWrapper().wrap(target: tagControl)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    open override func layoutSubviews() {
-        updateContent()
-        
-        super.layoutSubviews()
-    }
-    
-    public func updateContent() {
-        wrapped.removeFromSuperview()
-        
-        wrapped = wrappers.reduce(wrapped) { (result, wrapper) in
-            wrapper.wrap(target: wrapped)
+        wrapped = wrappers.reduce(wrapped) { (result, element) in
+            element.wrap(target: result)
         }
         
         addSubview(wrapped)
         wrapped.translatesAutoresizingMaskIntoConstraints = false
-        addConstraint(NSLayoutConstraint(item: wrapped, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: padding.left))
-        addConstraint(NSLayoutConstraint(item: wrapped, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: padding.right * -1))
-        addConstraint(NSLayoutConstraint(item: wrapped, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: padding.top))
-        addConstraint(NSLayoutConstraint(item: wrapped, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: padding.bottom * -1))
+        addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

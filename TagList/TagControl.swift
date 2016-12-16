@@ -34,7 +34,7 @@ open class TagControl: UIControl {
     public weak var delegate: TagActionDelegate?
     public weak var stateDelegate: TagStateDelegate?
     
-    private(set) var content: TagPresentable
+    var content: TagPresentable
     public var enableSelect = false
     
     // MARK: - init
@@ -63,22 +63,12 @@ open class TagControl: UIControl {
         }
     }
     
-    open override func layoutSubviews() {
-        updateContent()
-        
-        super.layoutSubviews()
-    }
-    
     func onTap() {
         if enableSelect {
             isSelected = !isSelected
             content.isSelected = isSelected
         }
         delegate?.tagActionTriggered(action: "tap")
-    }
-    
-    func updateContent() {
-        
     }
 }
 
@@ -89,7 +79,7 @@ extension TagControl: TagStateDelegate {
     }
 }
 
-class TextTagControl: TagControl {
+public class TextTagControl: TagControl {
     
     public var label = UILabel()
     
@@ -107,20 +97,16 @@ class TextTagControl: TagControl {
         addConstraint(NSLayoutConstraint(item: label, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
+        
+        label.text = content.tag
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func updateContent() {
-        super.updateContent()
-        
-        label.text = content.tag
-    }
 }
 
-class IconTagControl: TagControl {
+public class IconTagControl: TagControl {
     
     public var icon = UIImageView()
     public var height: CGFloat = 0
@@ -147,20 +133,16 @@ class IconTagControl: TagControl {
         addConstraint(NSLayoutConstraint(item: icon, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: icon, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: icon, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
+        
+        icon.image = UIImage(named: content.tag)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func updateContent() {
-        super.updateContent()
-        
-        icon.image = UIImage(named: content.tag)
-    }
 }
 
-class IconTextTagControl: TagControl {
+public class IconTextTagControl: TagControl {
     
     public var icon = UIImageView()
     public var label = UILabel()
@@ -194,16 +176,12 @@ class IconTextTagControl: TagControl {
         label.translatesAutoresizingMaskIntoConstraints = false
         addConstraint(NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: icon, attribute: .trailing, multiplier: 1, constant: space))
         addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
+        
+        icon.image = UIImage(named: content.tag)
+        label.text = content.tag
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func updateContent() {
-        super.updateContent()
-        
-        icon.image = UIImage(named: content.tag)
-        label.text = content.tag
     }
 }

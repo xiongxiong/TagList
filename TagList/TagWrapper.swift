@@ -23,16 +23,30 @@ open class TagWrapper: UIView, TagWrapperDelegate {
     
     var target: UIView?
     
+    open override var intrinsicContentSize: CGSize {
+        return target?.intrinsicContentSize ?? CGSize.zero
+    }
+    
     @discardableResult
     public func wrap<T: UIView>(target: T) -> TagWrapper where T: TagStateDelegate {
         self.target = target
         target.stateDelegate = self
         
-        removeConstraints(constraints)
-        addSubview(target)
-        target.translatesAutoresizingMaskIntoConstraints = false
+        subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+        arrangeViews(target: target)
         
         return self
+    }
+    
+    func arrangeViews<T: UIView>(target: T) {
+        addSubview(target)
+        target.translatesAutoresizingMaskIntoConstraints = false
+        addConstraint(NSLayoutConstraint(item: target, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: target, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: target, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: target, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
     }
 }
 
@@ -67,9 +81,7 @@ open class TagWrapperRemover: TagWrapper {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func wrap<T : UIView>(target: T) -> TagWrapper where T : TagStateDelegate {
-        super.wrap(target: target)
-        
+    override func arrangeViews<T : UIView>(target: T) {
         addConstraint(NSLayoutConstraint(item: target, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: target, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
@@ -77,8 +89,6 @@ open class TagWrapperRemover: TagWrapper {
         addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .width, relatedBy: .equal, toItem: target, attribute: .height, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .centerY, relatedBy: .equal, toItem: target, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .height, relatedBy: .equal, toItem: target, attribute: .height, multiplier: 1, constant: 0))
-        
-        return self
     }
     
     func didRemove() {

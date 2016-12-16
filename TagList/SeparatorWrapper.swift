@@ -16,7 +16,7 @@ public class SeparatorWrapper: UIView {
     
     open override var intrinsicContentSize: CGSize {
         let targetSize = target?.intrinsicContentSize ?? CGSize.zero
-        return CGSize(width: targetSize.width + separator.frame.width + separatorMargin.left + separatorMargin.right, height: max(targetSize.height, separator.frame.height) + separatorMargin.top + separatorMargin.bottom)
+        return CGSize(width: targetSize.width + separator.frame.width + separatorMargin.left + separatorMargin.right, height: max(targetSize.height, separator.frame.height + separatorMargin.top + separatorMargin.bottom))
     }
     
     func wrap(_ view: UIView) -> UIView {
