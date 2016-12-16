@@ -47,7 +47,7 @@ open class Tag: UIView {
         return CGSize(width: size.width + padding.left + padding.right, height: size.height + padding.top + padding.bottom)
     }
     
-    init(content: TagPresentable, type: TagControl.Type) {
+    init(content: TagPresentable, type: TagControl.Type, wrappers: [TagWrapper] = [], padding: UIEdgeInsets = UIEdgeInsets.zero) {
         self.content = content
         self.type = type
         super.init(frame: CGRect.zero)

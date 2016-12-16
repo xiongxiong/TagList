@@ -40,26 +40,27 @@ public class SeparatorWrapper: UIView {
     
     func arrangeViews(target: UIView) {
         addSubview(target)
-        let view = UIImageView(image: info.icon)
-        addSubview(view)
+        let icon = UIImageView(image: info.image)
+        icon.contentMode = .scaleAspectFit
+        addSubview(icon)
         
         target.translatesAutoresizingMaskIntoConstraints = false
         addConstraint(NSLayoutConstraint(item: target, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: target, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: target, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
         
-        view.translatesAutoresizingMaskIntoConstraints = false
-        addConstraint(NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: target, attribute: .trailing, multiplier: 1, constant: info.margin.left))
-        addConstraint(NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: info.size.width))
-        addConstraint(NSLayoutConstraint(item: view, attribute: .centerY, relatedBy: .equal, toItem: target, attribute: .centerY, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: info.size.height))
-        addConstraint(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: info.margin.right * -1))
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        addConstraint(NSLayoutConstraint(item: icon, attribute: .leading, relatedBy: .equal, toItem: target, attribute: .trailing, multiplier: 1, constant: info.margin.left))
+        addConstraint(NSLayoutConstraint(item: icon, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: info.size.width))
+        addConstraint(NSLayoutConstraint(item: icon, attribute: .centerY, relatedBy: .equal, toItem: target, attribute: .centerY, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: icon, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: info.size.height))
+        addConstraint(NSLayoutConstraint(item: icon, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: info.margin.right * -1))
     }
 }
 
 public struct SeparatorInfo {
     
-    var icon: UIImage = UIImage()
+    var image: UIImage = UIImage()
     var size: CGSize = CGSize.zero
     var margin: UIEdgeInsets = UIEdgeInsets.zero
 }

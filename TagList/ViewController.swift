@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         tagList.alignment = .center
         tagList.tagMargin = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
         tagList.isTagSeparated = true
-        tagList.separator.icon = #imageLiteral(resourceName: "icon_arrow_right")
+        tagList.separator.image = #imageLiteral(resourceName: "icon_arrow_right")
         tagList.separator.size = CGSize(width: 16, height: 16)
         tagList.separator.margin = UIEdgeInsets(top: 30, left: 8, bottom: 30, right: 15)
         tagList.translatesAutoresizingMaskIntoConstraints = false
@@ -60,9 +60,9 @@ class ViewController: UIViewController {
         let tag = Tag(content: TagPresentableText(tagStr), type: TagControlText.self)
         tag.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
         tag.backgroundColor = UIColor.orange
-        tag.bear_borderColor = UIColor.white
-        tag.bear_borderWidth = 1
-        tag.bear_cornerRadius = 5
+        tag.layer.borderColor = UIColor.cyan.cgColor
+        tag.layer.borderWidth = 1
+        tag.layer.cornerRadius = 5
         tagList.appendTag(tag)
         tagList.backgroundColor = UIColor.green
         tagList.setNeedsLayout()
