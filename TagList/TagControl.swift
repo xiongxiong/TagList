@@ -8,6 +8,11 @@
 
 import UIKit
 
+public protocol TagActionable {
+    
+    var actionDelegate: TagActionDelegate? { get set }
+}
+
 public protocol TagActionDelegate: NSObjectProtocol {
     
     func tagActionTriggered(action: String)
@@ -18,20 +23,24 @@ extension TagActionDelegate {
     func tagActionTriggered(action: String) {}
 }
 
-public protocol TagStateDelegate: NSObjectProtocol {
+public protocol TagStatable {
     
     var stateDelegate: TagStateDelegate? { get set }
-    func stateDidChange(state: UIControlState)
+}
+
+public protocol TagStateDelegate: NSObjectProtocol {
+    
+    func tagStateDidChange(state: UIControlState)
 }
 
 extension TagStateDelegate {
     
-    func stateDidChange(state: UIControlState) {}
+    func tagStateDidChange(state: UIControlState) {}
 }
 
-open class TagControl: UIControl {
+open class TagControl: UIControl, TagActionable, TagStatable {
     
-    public weak var delegate: TagActionDelegate?
+    public weak var actionDelegate: TagActionDelegate?
     public weak var stateDelegate: TagStateDelegate?
     
     private(set) var content: TagPresentable
@@ -42,42 +51,41 @@ open class TagControl: UIControl {
         super.init(frame: CGRect.zero)
         
         clipsToBounds = true
-        addObserver(self, forKeyPath: "state", options: [.initial, .new], context: nil)
+//        addObserver(self, forKeyPath: "state", options: [.initial, .new], context: nil)
         addTarget(self, action: #selector(onTap), for: .touchUpInside)
+//        addTarget(self, action: #selector(onTap), for: .allTouchEvents)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        removeObserver(self, forKeyPath: "state")
-    }
+//    deinit {
+//        removeObserver(self, forKeyPath: "state")
+//    }
     
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        switch keyPath {
-        case .some("state"):
-            stateDidChange(state: state)
-        case .some("content.tag"):
-            break
-        default:
-            break
-        }
-    }
+//    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        switch keyPath {
+//        case .some("state"):
+//            tagStateDidChange(state: state)
+//        default:
+//            break
+//        }
+//    }
     
     func onTap() {
         if enableSelect {
             isSelected = !isSelected
             content.isSelected = isSelected
         }
-        delegate?.tagActionTriggered(action: "tap")
+        actionDelegate?.tagActionTriggered(action: "tap")
     }
 }
 
 extension TagControl: TagStateDelegate {
 
-    public func stateDidChange(state: UIControlState) {
-        stateDelegate?.stateDidChange(state: state)
+    public func tagStateDidChange(state: UIControlState) {
+        stateDelegate?.tagStateDidChange(state: state)
     }
 }
 

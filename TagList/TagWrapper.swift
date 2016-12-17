@@ -8,17 +8,16 @@
 
 import UIKit
 
-protocol TagWrapperDelegate {
+protocol TagWrapperDelegate: TagActionable, TagStatable {
     
-    var delegate: TagActionDelegate? { get set }
-    var stateDelegate: TagStateDelegate? { get set }
-    
-    func wrap<T : UIView>(target: T) -> TagWrapper where T : TagStateDelegate
+//    func wrap<T : UIView>(target: inout T) -> TagWrapper where T: TagActionable, T : TagStatable
+    func wrap(target: TagControl) -> TagWrapper
+    func wrap(wrapper: TagWrapper) -> TagWrapper
 }
 
 open class TagWrapper: UIView, TagWrapperDelegate {
     
-    public weak var delegate: TagActionDelegate?
+    public weak var actionDelegate: TagActionDelegate?
     public weak var stateDelegate: TagStateDelegate?
     
     var target: UIView?
@@ -27,15 +26,41 @@ open class TagWrapper: UIView, TagWrapperDelegate {
         return target?.intrinsicContentSize ?? CGSize.zero
     }
     
-    @discardableResult
-    public func wrap<T: UIView>(target: T) -> TagWrapper where T: TagStateDelegate {
+//    public func wrap<T: UIView>(target: inout T) -> TagWrapper where T: TagActionable, T : TagStatable {
+//        self.target = target
+//        target.actionDelegate = self
+//        target.stateDelegate = self
+//        
+//        subviews.forEach { (view) in
+//            view.removeFromSuperview()
+//        }
+//        arrangeViews(target: target)
+//        
+//        return self
+//    }
+    
+    func wrap(target: TagControl) -> TagWrapper {
         self.target = target
+        target.actionDelegate = self
         target.stateDelegate = self
         
         subviews.forEach { (view) in
             view.removeFromSuperview()
         }
         arrangeViews(target: target)
+        
+        return self
+    }
+    
+    func wrap(wrapper: TagWrapper) -> TagWrapper {
+        self.target = wrapper
+        wrapper.actionDelegate = self
+        wrapper.stateDelegate = self
+        
+        subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+        arrangeViews(target: wrapper)
         
         return self
     }
@@ -50,9 +75,16 @@ open class TagWrapper: UIView, TagWrapperDelegate {
     }
 }
 
+extension TagWrapper: TagActionDelegate {
+    
+    public func tagActionTriggered(action: String) {
+        actionDelegate?.tagActionTriggered(action: action)
+    }
+}
+
 extension TagWrapper: TagStateDelegate {
 
-    public func stateDidChange(state: UIControlState) {
-        stateDelegate?.stateDidChange(state: state)
+    public func tagStateDidChange(state: UIControlState) {
+        stateDelegate?.tagStateDidChange(state: state)
     }
 }

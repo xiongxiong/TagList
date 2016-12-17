@@ -23,9 +23,10 @@ class ViewController: UIViewController {
         tagList.alignment = .center
         tagList.tagMargin = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
         tagList.isTagSeparated = true
+        tagList.isTagSelectable = true
         tagList.separator.image = #imageLiteral(resourceName: "icon_arrow_right")
         tagList.separator.size = CGSize(width: 16, height: 16)
-        tagList.separator.margin = UIEdgeInsets(top: 30, left: 8, bottom: 30, right: 15)
+        tagList.separator.margin = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         tagList.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraint(NSLayoutConstraint(item: tagList, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: tagList, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
@@ -57,8 +58,7 @@ class ViewController: UIViewController {
     
     func addTag() {
         let tagStr = tagArr[Int(arc4random_uniform(UInt32(tagArr.count)))]
-        let tag = Tag(content: TagPresentableText(tagStr), type: TagControlText.self)
-        tag.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
+        let tag = MyTag(content: TagPresentableText(tagStr), type: TagControlText.self, wrappers: [TagWrapperRemover()], padding: UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5))
         tag.backgroundColor = UIColor.orange
         tag.layer.borderColor = UIColor.cyan.cgColor
         tag.layer.borderWidth = 1

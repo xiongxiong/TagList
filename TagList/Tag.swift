@@ -50,6 +50,8 @@ open class Tag: UIView {
     init(content: TagPresentable, type: TagControl.Type, wrappers: [TagWrapper] = [], padding: UIEdgeInsets = UIEdgeInsets.zero) {
         self.content = content
         self.type = type
+        self.wrappers = wrappers
+        self.padding = padding
         super.init(frame: CGRect.zero)
         
         update()
@@ -65,12 +67,12 @@ open class Tag: UIView {
         }
         
         tagControl = type.init(content: content)
-        tagControl.delegate = self
-        
         wrapped = TagWrapper().wrap(target: tagControl)
         wrapped = wrappers.reduce(wrapped) { (result, element) in
-            element.wrap(target: result)
+            element.wrap(wrapper: result)
         }
+        wrapped.actionDelegate = self
+        wrapped.stateDelegate = self
         
         addSubview(wrapped)
         wrapped.translatesAutoresizingMaskIntoConstraints = false
@@ -85,5 +87,12 @@ extension Tag: TagActionDelegate {
     
     public func tagActionTriggered(action: String) {
         delegate?.tagActionTriggered(action: action, content: content)
+    }
+}
+
+extension Tag: TagStateDelegate {
+    
+    public func tagStateDidChange(state: UIControlState) {
+        
     }
 }
