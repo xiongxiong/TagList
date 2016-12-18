@@ -1,5 +1,5 @@
 //
-//  TagControls.swift
+//  TagContents.swift
 //  TagList
 //
 //  Created by 王继荣 on 16/12/2016.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class TagControlText: TagControl {
+public class TagContentText: TagContent {
     
     public var label = UILabel()
     
@@ -35,7 +35,7 @@ public class TagControlText: TagControl {
     }
 }
 
-public class TagControlIcon: TagControl {
+public class TagContentIcon: TagContent {
     
     public var icon = UIImageView()
     public var height: CGFloat = 0
@@ -71,7 +71,7 @@ public class TagControlIcon: TagControl {
     }
 }
 
-public class TagControlIconText: TagControl {
+public class TagContentIconText: TagContent {
     
     public var icon = UIImageView()
     public var label = UILabel()

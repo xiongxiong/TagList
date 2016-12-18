@@ -10,7 +10,14 @@ import UIKit
 
 public protocol TagListDelegate: NSObjectProtocol {
     
-    func tagActionTriggered(action: String, content: TagPresentable, index: Int)
+    func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int)
+    func tagUpdated(tagList: TagList)
+}
+
+extension TagListDelegate {
+    
+    func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int) {}
+    func tagUpdated(tagList: TagList) {}
 }
 
 open class TagList: UIView {
@@ -21,8 +28,8 @@ open class TagList: UIView {
     public var alignment: TagAlignment = .left
     public var tagMargin = UIEdgeInsets.zero
     public var separator: SeparatorInfo = SeparatorInfo()
-    public var isTagSeparated = false
-    public var isTagSelectable = false
+    public var isSeparated = false
+    public var selectionMode: TagSelectionMode = .single
 
     private var rows: [(tagViews: [UIView], height: CGFloat)] = []
     
@@ -58,6 +65,9 @@ open class TagList: UIView {
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         switch keyPath {
         case .some("tags"):
+            tags.forEach({ (tag) in
+                tag.delegate = self
+            })
             update()
         default:
             break
@@ -161,19 +171,19 @@ open class TagList: UIView {
         }
     }
     
-    // MARK: - Custom
-    
     public func index(of content: TagPresentable) -> Int? {
         return tags.index(where: {
             $0.content.tag == content.tag
         })
     }
     
+    // MARK: - Custom
+    
     func getTagViews() -> [UIView] {
         return tags.enumerated().map { (index, tag) -> UIView in
             tag.delegate = self
             var tagView: UIView = tag
-            if isTagSeparated && index < tags.count - 1 {
+            if isSeparated && index < tags.count - 1 {
                 let wrapper = SeparatorWrapper(info: separator)
                 tagView = wrapper.wrap(tagView)
             }
@@ -184,17 +194,42 @@ open class TagList: UIView {
     func getSurroundSize(view: UIView) -> CGSize {
         return CGSize(width: view.intrinsicContentSize.width + tagMargin.left + tagMargin.right, height: view.intrinsicContentSize.height + tagMargin.top + tagMargin.bottom)
     }
+    
+    func onTagTap(tag: Tag) {
+        switch selectionMode {
+        case .single:
+            tag.isSelected = !tag.isSelected
+            if tag.isSelected {
+                tags.forEach({ (tag) in
+                    tag.isSelected = false
+                })
+            }
+        case .multiple:
+            tag.isSelected = !tag.isSelected
+        default:
+            break
+        }
+    }
 }
 
 extension TagList: TagDelegate {
     
-    public func tagUpdated() {
+    func tagUpdated() {
         update()
+        delegate?.tagUpdated(tagList: self)
     }
     
-    public func tagActionTriggered(action: String, content: TagPresentable) {
-        if let index = index(of: content) {
-            delegate?.tagActionTriggered(action: action, content: content, index: index)
+    func tagActionTriggered(tag: Tag, action: TagAction) {
+        switch action {
+        case .tap:
+            onTagTap(tag: tag)
+        case .remove:
+            removeTag(tag.content)
+        default:
+            break
+        }
+        if let index = index(of: tag.content) {
+            delegate?.tagActionTriggered(tagList: self, action: action, content: tag.content, index: index)
         }
     }
 }
@@ -204,4 +239,11 @@ public enum TagAlignment {
     case left
     case center
     case right
+}
+
+public enum TagSelectionMode {
+    
+    case none
+    case single
+    case multiple
 }
