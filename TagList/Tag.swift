@@ -24,11 +24,6 @@ open class Tag: UIView {
             update()
         }
     }
-    public var type: TagContent.Type {
-        didSet {
-            update()
-        }
-    }
     public var wrappers: [TagWrapper] = [] {
         didSet {
             update()
@@ -48,18 +43,18 @@ open class Tag: UIView {
     private var tagContent: TagContent!
     private var wrapped: TagWrapper!
     private var tapGestureRecognizer: UITapGestureRecognizer!
+    private var onSelect: ((Tag) -> Void)?
     
     open override var intrinsicContentSize: CGSize {
         let size = wrapped.intrinsicContentSize
         return CGSize(width: size.width + padding.left + padding.right, height: size.height + padding.top + padding.bottom)
     }
     
-    init(content: TagPresentable, type: TagContent.Type, wrappers: [TagWrapper] = [], padding: UIEdgeInsets = UIEdgeInsets.zero) {
+    init(content: TagPresentable, onInit: ((Tag) -> Void)? = nil, onSelect: ((Tag) -> Void)? = nil) {
         self.content = content
-        self.type = type
-        self.wrappers = wrappers
-        self.padding = padding
+        self.onSelect = onSelect
         super.init(frame: CGRect.zero)
+        onInit?(self)
         
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
         addGestureRecognizer(tapGestureRecognizer)
@@ -82,7 +77,7 @@ open class Tag: UIView {
             view.removeFromSuperview()
         }
         
-        tagContent = type.init(content: content)
+        tagContent = content.createTagContent()
         tagContent.actionDelegate = self
         stateDelegate = tagContent
         wrapped = TagWrapper().wrap(target: tagContent)
@@ -99,6 +94,7 @@ open class Tag: UIView {
     }
     
     public func tagSelected() {
+        onSelect?(self)
         delegate?.tagUpdated()
         stateDelegate?.tagSelected(isSelected)
     }

@@ -10,16 +10,19 @@ import UIKit
 
 open class TagWrapperRemover: TagWrapper {
     
-    let deleteButton = UIButton()
-    var space: CGFloat = 8
+    public let deleteButton = UIButton()
+    public var space: CGFloat = 0
+    private var onSelect: ((TagWrapperRemover, Bool) -> Void)?
     
     open override var intrinsicContentSize: CGSize {
         let targetSize = target?.intrinsicContentSize ?? CGSize.zero
         return CGSize(width: targetSize.width + space + targetSize.height, height: targetSize.height)
     }
     
-    init() {
+    init(onInit: ((TagWrapperRemover) -> Void)? = nil, onSelect: ((TagWrapperRemover, Bool) -> Void)? = nil) {
+        self.onSelect = onSelect
         super.init(frame: CGRect.zero)
+        onInit?(self)
         
         deleteButton.contentMode = .scaleAspectFit
         deleteButton.setImage(#imageLiteral(resourceName: "icon_delete").withRenderingMode(.alwaysTemplate), for: .normal)
@@ -52,8 +55,7 @@ open class TagWrapperRemover: TagWrapper {
     }
     
     public override func tagSelected(_ isSelected: Bool) {
+        onSelect?(self, isSelected)
         super.tagSelected(isSelected)
-        
-        deleteButton.tintColor = isSelected ? UIColor.white : UIColor.black
     }
 }

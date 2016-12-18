@@ -59,14 +59,22 @@ class ViewController: UIViewController {
         let str = "In 1886 he moved to Paris where he met members of the avant-garde"
         let tagArr = str.components(separatedBy: .whitespaces)
         let tagStr = tagArr[Int(arc4random_uniform(UInt32(tagArr.count)))]
-        let tag = MyTag(content: TagPresentableText(tagStr), type: TagContentText.self, wrappers: [TagWrapperRemover()], padding: UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5))
-        tag.layer.borderColor = UIColor.cyan.cgColor
-        tag.layer.borderWidth = 1
-        tag.layer.cornerRadius = 5
-        tagList.appendTag(tag)
-        tagList.backgroundColor = UIColor.green
-        tagList.setNeedsLayout()
-        tagList.layoutIfNeeded()
+        let tag = Tag(content: TagPresentableText(tagStr) {
+            $0.label.font = UIFont.systemFont(ofSize: 12)
+            }, onInit: {
+                $0.wrappers = [TagWrapperRemover(onInit: {
+                    $0.space = 8
+                }) {
+                    $0.deleteButton.tintColor = $1 ? UIColor.white : UIColor.black
+                    }]
+                $0.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
+                $0.layer.borderColor = UIColor.cyan.cgColor
+                $0.layer.borderWidth = 2
+                $0.layer.cornerRadius = 5
+            }, onSelect: {
+            $0.backgroundColor = $0.isSelected ? UIColor.orange : UIColor.white
+        })
+        tagList.tags.append(tag)
     }
     
     func modify() {

@@ -150,30 +150,16 @@ open class TagList: UIView {
     }
     
     // MARK: - Manage tags
-    
-    public func appendTag(_ tag: Tag) {
-        tags.append(tag)
-    }
-    
-    public func insertTag(_ tag: Tag, at index: Int) {
-        tags.insert(tag, at: index)
-    }
-
-    public func removeTag(_ content: TagPresentable) {
-        if let index = index(of: content) {
-            tags.remove(at: index)
-        }
-    }
 
     public func selectedTags() -> [Tag] {
         return tags.filter {
-            $0.content.isSelected == true
+            $0.isSelected == true
         }
     }
     
-    public func index(of content: TagPresentable) -> Int? {
+    public func index(of tag: Tag) -> Int? {
         return tags.index(where: {
-            $0.content.tag == content.tag
+            $0 == tag
         })
     }
     
@@ -224,11 +210,13 @@ extension TagList: TagDelegate {
         case .tap:
             onTagTap(tag: tag)
         case .remove:
-            removeTag(tag.content)
+            if let index = index(of: tag) {
+                tags.remove(at: index)
+            }
         default:
             break
         }
-        if let index = index(of: tag.content) {
+        if let index = index(of: tag) {
             delegate?.tagActionTriggered(tagList: self, action: action, content: tag.content, index: index)
         }
     }

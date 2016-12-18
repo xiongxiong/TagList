@@ -33,10 +33,10 @@ open class TagContent: UIView, TagActionable, TagStatable {
     public weak var actionDelegate: TagActionDelegate?
     public weak var stateDelegate: TagStateDelegate?
     
-    private(set) var content: TagPresentable
+    private(set) var content: String
     
-    public required init(content: TagPresentable) {
-        self.content = content
+    public init(tag: String) {
+        self.content = tag
         super.init(frame: CGRect.zero)
     }
     

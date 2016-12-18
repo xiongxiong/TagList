@@ -11,9 +11,51 @@ import UIKit
 public class TagPresentableText: TagPresentable {
     
     public private(set) var tag: String = ""
-    public var isSelected: Bool = false
+    private var onInit: ((TagContentText) -> Void)?
     
-    init(_ tag: String) {
+    init(_ tag: String, onInit: ((TagContentText) -> Void)? = nil) {
         self.tag = tag
+        self.onInit = onInit
+    }
+    
+    public func createTagContent() -> TagContent {
+        let tagContent = TagContentText(tag: tag)
+        onInit?(tagContent)
+        return tagContent
+    }
+}
+
+public class TagPresentableIcon: TagPresentable {
+    
+    public private(set) var tag: String = ""
+    private var onInit: ((TagContentIcon) -> Void)?
+    
+    init(_ tag: String, onInit: ((TagContentIcon) -> Void)? = nil) {
+        self.tag = tag
+        self.onInit = onInit
+    }
+    
+    public func createTagContent() -> TagContent {
+        let tagContent = TagContentIcon(tag: tag)
+        onInit?(tagContent)
+        return tagContent
+    }
+}
+
+
+public class TagPresentableIconText: TagPresentable {
+    
+    public private(set) var tag: String = ""
+    private var onInit: ((TagContentIconText) -> Void)?
+    
+    init(_ tag: String, onInit: ((TagContentIconText) -> Void)? = nil) {
+        self.tag = tag
+        self.onInit = onInit
+    }
+    
+    public func createTagContent() -> TagContent {
+        let tagContent = TagContentIconText(tag: tag)
+        onInit?(tagContent)
+        return tagContent
     }
 }

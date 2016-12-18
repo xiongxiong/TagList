@@ -16,8 +16,8 @@ public class TagContentText: TagContent {
         return label.intrinsicContentSize
     }
     
-    public required init(content: TagPresentable) {
-        super.init(content: content)
+    public override init(tag: String) {
+        super.init(tag: tag)
         
         addSubview(label)
         
@@ -27,7 +27,7 @@ public class TagContentText: TagContent {
         addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
         
-        label.text = content.tag
+        label.text = tag
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -51,8 +51,8 @@ public class TagContentIcon: TagContent {
         return size
     }
     
-    public required init(content: TagPresentable) {
-        super.init(content: content)
+    public override init(tag: String) {
+        super.init(tag: tag)
         
         addSubview(icon)
         
@@ -63,7 +63,7 @@ public class TagContentIcon: TagContent {
         addConstraint(NSLayoutConstraint(item: icon, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: icon, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
         
-        icon.image = UIImage(named: content.tag)
+        icon.image = UIImage(named: tag)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -89,8 +89,8 @@ public class TagContentIconText: TagContent {
         return CGSize(width: imageSize.width + labelSize.height + space, height: labelSize.height)
     }
     
-    public required init(content: TagPresentable) {
-        super.init(content: content)
+    public override init(tag: String) {
+        super.init(tag: tag)
         
         addSubview(icon)
         addSubview(label)
@@ -106,8 +106,8 @@ public class TagContentIconText: TagContent {
         addConstraint(NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: icon, attribute: .trailing, multiplier: 1, constant: space))
         addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
-        icon.image = UIImage(named: content.tag)
-        label.text = content.tag
+        icon.image = UIImage(named: tag)
+        label.text = tag
     }
     
     public required init?(coder aDecoder: NSCoder) {
