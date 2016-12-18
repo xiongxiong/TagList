@@ -48,6 +48,6 @@ open class TagWrapperRemover: TagWrapper {
     }
     
     func didRemove() {
-        actionDelegate?.tagActionTriggered(action: "remove")
+        actionDelegate?.tagActionTriggered(action: .remove)
     }
 }

@@ -8,11 +8,22 @@
 
 import UIKit
 
-protocol TagWrapperDelegate: TagActionable, TagStatable {
+protocol TagWrapperDelegate: TagActionable, TagActionDelegate, TagStatable, TagStateDelegate {
     
 //    func wrap<T : UIView>(target: inout T) -> TagWrapper where T: TagActionable, T : TagStatable
-    func wrap(target: TagControl) -> TagWrapper
+    func wrap(target: TagContent) -> TagWrapper
     func wrap(wrapper: TagWrapper) -> TagWrapper
+}
+
+extension TagWrapperDelegate {
+    
+    public func tagActionTriggered(action: TagAction) {
+        actionDelegate?.tagActionTriggered(action: action)
+    }
+    
+    public func tagStateDidChange(state: UIControlState) {
+        stateDelegate?.tagStateDidChange(state: state)
+    }
 }
 
 open class TagWrapper: UIView, TagWrapperDelegate {
@@ -21,6 +32,16 @@ open class TagWrapper: UIView, TagWrapperDelegate {
     public weak var stateDelegate: TagStateDelegate?
     
     var target: UIView?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        isUserInteractionEnabled = false
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     open override var intrinsicContentSize: CGSize {
         return target?.intrinsicContentSize ?? CGSize.zero
@@ -39,9 +60,9 @@ open class TagWrapper: UIView, TagWrapperDelegate {
 //        return self
 //    }
     
-    func wrap(target: TagControl) -> TagWrapper {
+    func wrap(target: TagContent) -> TagWrapper {
         self.target = target
-        target.actionDelegate = self
+        actionDelegate = target
         target.stateDelegate = self
         
         subviews.forEach { (view) in
@@ -54,7 +75,7 @@ open class TagWrapper: UIView, TagWrapperDelegate {
     
     func wrap(wrapper: TagWrapper) -> TagWrapper {
         self.target = wrapper
-        wrapper.actionDelegate = self
+        actionDelegate = wrapper
         wrapper.stateDelegate = self
         
         subviews.forEach { (view) in
@@ -72,19 +93,5 @@ open class TagWrapper: UIView, TagWrapperDelegate {
         addConstraint(NSLayoutConstraint(item: target, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: target, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: target, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
-    }
-}
-
-extension TagWrapper: TagActionDelegate {
-    
-    public func tagActionTriggered(action: String) {
-        actionDelegate?.tagActionTriggered(action: action)
-    }
-}
-
-extension TagWrapper: TagStateDelegate {
-
-    public func tagStateDidChange(state: UIControlState) {
-        stateDelegate?.tagStateDidChange(state: state)
     }
 }
