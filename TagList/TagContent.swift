@@ -25,7 +25,7 @@ public protocol TagStatable {
 
 public protocol TagStateDelegate: NSObjectProtocol {
     
-    func tagStateDidChange(state: UIControlState)
+    func tagSelected(_ isSelected: Bool)
 }
 
 open class TagContent: UIView, TagActionable, TagStatable {
@@ -38,8 +38,6 @@ open class TagContent: UIView, TagActionable, TagStatable {
     public required init(content: TagPresentable) {
         self.content = content
         super.init(frame: CGRect.zero)
-        
-        isUserInteractionEnabled = false
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -56,8 +54,8 @@ extension TagContent: TagActionDelegate {
 
 extension TagContent: TagStateDelegate {
 
-    public func tagStateDidChange(state: UIControlState) {
-        stateDelegate?.tagStateDidChange(state: state)
+    public func tagSelected(_ isSelected: Bool) {
+        stateDelegate?.tagSelected(isSelected)
     }
 }
 

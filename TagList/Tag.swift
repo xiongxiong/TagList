@@ -14,7 +14,7 @@ protocol TagDelegate: NSObjectProtocol {
     func tagActionTriggered(tag: Tag, action: TagAction)
 }
 
-open class Tag: UIControl {
+open class Tag: UIView {
 
     weak var delegate: TagDelegate?
     public weak var stateDelegate: TagStateDelegate?
@@ -39,27 +39,15 @@ open class Tag: UIControl {
             update()
         }
     }
+    public var isSelected: Bool = false {
+        didSet {
+            tagSelected()
+        }
+    }
     
     private var tagContent: TagContent!
     private var wrapped: TagWrapper!
-    
-    open override var isEnabled: Bool {
-        didSet {
-            tagStateDidChange()
-        }
-    }
-    
-    open override var isSelected: Bool {
-        didSet {
-            tagStateDidChange()
-        }
-    }
-    
-    open override var isHighlighted: Bool {
-        didSet {
-            tagStateDidChange()
-        }
-    }
+    private var tapGestureRecognizer: UITapGestureRecognizer!
     
     open override var intrinsicContentSize: CGSize {
         let size = wrapped.intrinsicContentSize
@@ -73,8 +61,11 @@ open class Tag: UIControl {
         self.padding = padding
         super.init(frame: CGRect.zero)
         
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
+        addGestureRecognizer(tapGestureRecognizer)
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        
         clipsToBounds = true
-        addTarget(self, action: #selector(onTap), for: .touchUpInside)
         update()
     }
     
@@ -104,12 +95,12 @@ open class Tag: UIControl {
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
-        tagStateDidChange()
+        tagSelected()
     }
     
-    public func tagStateDidChange() {
+    public func tagSelected() {
         delegate?.tagUpdated()
-        stateDelegate?.tagStateDidChange(state: state)
+        stateDelegate?.tagSelected(isSelected)
     }
 }
 

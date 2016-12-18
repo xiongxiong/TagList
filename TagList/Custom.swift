@@ -10,12 +10,9 @@ import UIKit
 
 class MyTag: Tag {
 
-    override func tagStateDidChange() {
-        switch state {
-        case UIControlState.selected:
-            backgroundColor = UIColor.orange
-        default:
-            backgroundColor = UIColor.gray
-        }
+    override func tagSelected() {
+        super.tagSelected()
+        
+        backgroundColor = isSelected ? UIColor.orange : UIColor.white
     }
 }

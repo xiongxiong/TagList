@@ -22,7 +22,7 @@ open class TagWrapperRemover: TagWrapper {
         super.init(frame: CGRect.zero)
         
         deleteButton.contentMode = .scaleAspectFit
-        deleteButton.setImage(#imageLiteral(resourceName: "icon_delete"), for: .normal)
+        deleteButton.setImage(#imageLiteral(resourceName: "icon_delete").withRenderingMode(.alwaysTemplate), for: .normal)
         deleteButton.addTarget(self, action: #selector(didRemove), for: .touchUpInside)
     }
     
@@ -49,5 +49,11 @@ open class TagWrapperRemover: TagWrapper {
     
     func didRemove() {
         actionDelegate?.tagActionTriggered(action: .remove)
+    }
+    
+    public override func tagSelected(_ isSelected: Bool) {
+        super.tagSelected(isSelected)
+        
+        deleteButton.tintColor = isSelected ? UIColor.white : UIColor.black
     }
 }

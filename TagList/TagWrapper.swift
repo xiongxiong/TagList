@@ -15,33 +15,12 @@ protocol TagWrapperDelegate: TagActionable, TagActionDelegate, TagStatable, TagS
     func wrap(wrapper: TagWrapper) -> TagWrapper
 }
 
-extension TagWrapperDelegate {
-    
-    public func tagActionTriggered(action: TagAction) {
-        actionDelegate?.tagActionTriggered(action: action)
-    }
-    
-    public func tagStateDidChange(state: UIControlState) {
-        stateDelegate?.tagStateDidChange(state: state)
-    }
-}
-
 open class TagWrapper: UIView, TagWrapperDelegate {
     
     public weak var actionDelegate: TagActionDelegate?
     public weak var stateDelegate: TagStateDelegate?
     
     var target: UIView?
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        isUserInteractionEnabled = false
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     open override var intrinsicContentSize: CGSize {
         return target?.intrinsicContentSize ?? CGSize.zero
@@ -93,5 +72,13 @@ open class TagWrapper: UIView, TagWrapperDelegate {
         addConstraint(NSLayoutConstraint(item: target, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: target, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: target, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+    }
+    
+    public func tagActionTriggered(action: TagAction) {
+        actionDelegate?.tagActionTriggered(action: action)
+    }
+    
+    public func tagSelected(_ isSelected: Bool) {
+        stateDelegate?.tagSelected(isSelected)
     }
 }
