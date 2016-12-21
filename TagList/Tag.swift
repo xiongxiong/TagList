@@ -19,11 +19,7 @@ open class Tag: UIView {
     weak var delegate: TagDelegate?
     public weak var stateDelegate: TagStateDelegate?
     
-    public var content: TagPresentable {
-        didSet {
-            update()
-        }
-    }
+    public private(set) var content: TagPresentable
     public var wrappers: [TagWrapper] = [] {
         didSet {
             update()
@@ -94,6 +90,7 @@ open class Tag: UIView {
     }
     
     public func tagSelected() {
+        content.isSelected = isSelected
         onSelect?(self)
         delegate?.tagUpdated()
         stateDelegate?.tagSelected(isSelected)
