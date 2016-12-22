@@ -19,7 +19,7 @@ open class TagWrapperRemover: TagWrapper {
         return CGSize(width: targetSize.width + space + targetSize.height, height: targetSize.height)
     }
     
-    init(onInit: ((TagWrapperRemover) -> Void)? = nil, onSelect: ((TagWrapperRemover, Bool) -> Void)? = nil) {
+    public init(onInit: ((TagWrapperRemover) -> Void)? = nil, onSelect: ((TagWrapperRemover, Bool) -> Void)? = nil) {
         self.onSelect = onSelect
         super.init(frame: CGRect.zero)
         onInit?(self)

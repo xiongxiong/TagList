@@ -30,8 +30,12 @@ open class Tag: UIView {
             update()
         }
     }
-    public var isSelected: Bool = false {
-        didSet {
+    public var isSelected: Bool {
+        get {
+            return content.isSelected
+        }
+        set {
+            content.isSelected = newValue
             tagSelected()
         }
     }
