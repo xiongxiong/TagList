@@ -49,7 +49,7 @@
 		4226ABF91E03B8D600AD40D2 /* TagContents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagContents.swift; sourceTree = "<group>"; };
 		4226ABFB1E03B90000AD40D2 /* TagPresentables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPresentables.swift; sourceTree = "<group>"; };
 		4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagWrappers.swift; sourceTree = "<group>"; };
-		4233BD651E06C0BB00BDB8C1 /* TagList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TagList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4233BD651E06C0BB00BDB8C1 /* SwiftTagList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftTagList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4233BD671E06C0BB00BDB8C1 /* TagList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagList.h; sourceTree = "<group>"; };
 		4233BD681E06C0BB00BDB8C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42AF1F431E01124F0048417E /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				4206715B1DFF8C090075B70F /* TagListDemo.app */,
-				4233BD651E06C0BB00BDB8C1 /* TagList.framework */,
+				4233BD651E06C0BB00BDB8C1 /* SwiftTagList.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -165,9 +165,9 @@
 			productReference = 4206715B1DFF8C090075B70F /* TagListDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4233BD641E06C0BB00BDB8C1 /* TagList */ = {
+		4233BD641E06C0BB00BDB8C1 /* SwiftTagList */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4233BD6A1E06C0BB00BDB8C1 /* Build configuration list for PBXNativeTarget "TagList" */;
+			buildConfigurationList = 4233BD6A1E06C0BB00BDB8C1 /* Build configuration list for PBXNativeTarget "SwiftTagList" */;
 			buildPhases = (
 				4233BD601E06C0BB00BDB8C1 /* Sources */,
 				4233BD611E06C0BB00BDB8C1 /* Frameworks */,
@@ -178,9 +178,9 @@
 			);
 			dependencies = (
 			);
-			name = TagList;
+			name = SwiftTagList;
 			productName = TagList;
-			productReference = 4233BD651E06C0BB00BDB8C1 /* TagList.framework */;
+			productReference = 4233BD651E06C0BB00BDB8C1 /* SwiftTagList.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -218,7 +218,7 @@
 			projectRoot = "";
 			targets = (
 				4206715A1DFF8C090075B70F /* TagListDemo */,
-				4233BD641E06C0BB00BDB8C1 /* TagList */,
+				4233BD641E06C0BB00BDB8C1 /* SwiftTagList */,
 			);
 		};
 /* End PBXProject section */
@@ -485,7 +485,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4233BD6A1E06C0BB00BDB8C1 /* Build configuration list for PBXNativeTarget "TagList" */ = {
+		4233BD6A1E06C0BB00BDB8C1 /* Build configuration list for PBXNativeTarget "SwiftTagList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4233BD6B1E06C0BB00BDB8C1 /* Debug */,

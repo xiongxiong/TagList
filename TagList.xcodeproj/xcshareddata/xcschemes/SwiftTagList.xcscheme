@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4233BD641E06C0BB00BDB8C1"
-               BuildableName = "TagList.framework"
-               BlueprintName = "TagList"
+               BuildableName = "SwiftTagList.framework"
+               BlueprintName = "SwiftTagList"
                ReferencedContainer = "container:TagList.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4233BD641E06C0BB00BDB8C1"
-            BuildableName = "TagList.framework"
-            BlueprintName = "TagList"
+            BuildableName = "SwiftTagList.framework"
+            BlueprintName = "SwiftTagList"
             ReferencedContainer = "container:TagList.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +64,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4233BD641E06C0BB00BDB8C1"
-            BuildableName = "TagList.framework"
-            BlueprintName = "TagList"
+            BuildableName = "SwiftTagList.framework"
+            BlueprintName = "SwiftTagList"
             ReferencedContainer = "container:TagList.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

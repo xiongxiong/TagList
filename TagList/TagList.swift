@@ -14,7 +14,7 @@ public protocol TagListDelegate: NSObjectProtocol {
     func tagListUpdated(tagList: TagList)
 }
 
-extension TagListDelegate {
+public extension TagListDelegate {
     
     func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int) {}
     func tagUpdated(tagList: TagList) {}
