@@ -46,7 +46,7 @@ open class Tag: UIView {
         return CGSize(width: size.width + padding.left + padding.right, height: size.height + padding.top + padding.bottom)
     }
     
-    init(content: TagPresentable, onInit: ((Tag) -> Void)? = nil, onSelect: ((Tag) -> Void)? = nil) {
+    public init(content: TagPresentable, onInit: ((Tag) -> Void)? = nil, onSelect: ((Tag) -> Void)? = nil) {
         self.content = content
         self.onSelect = onSelect
         super.init(frame: CGRect.zero)
