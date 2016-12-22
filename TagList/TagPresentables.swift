@@ -8,13 +8,13 @@
 
 import UIKit
 
-public class TagPresentableText: TagPresentable {
+public struct TagPresentableText: TagPresentable {
     
     public private(set) var tag: String = ""
     public var isSelected: Bool = false
     private var onInit: ((TagContentText) -> Void)?
     
-    init(_ tag: String, onInit: ((TagContentText) -> Void)? = nil) {
+    public init(_ tag: String, onInit: ((TagContentText) -> Void)? = nil) {
         self.tag = tag
         self.onInit = onInit
     }
@@ -26,38 +26,44 @@ public class TagPresentableText: TagPresentable {
     }
 }
 
-public class TagPresentableIcon: TagPresentable {
+public struct TagPresentableIcon: TagPresentable {
     
     public private(set) var tag: String = ""
+    public private(set) var icon: String = ""
     public var isSelected: Bool = false
     private var onInit: ((TagContentIcon) -> Void)?
     
-    init(_ tag: String, onInit: ((TagContentIcon) -> Void)? = nil) {
+    public init(_ tag: String, icon: String, onInit: ((TagContentIcon) -> Void)? = nil) {
         self.tag = tag
+        self.icon = icon
         self.onInit = onInit
     }
     
     public func createTagContent() -> TagContent {
         let tagContent = TagContentIcon(tag: tag)
+        tagContent.icon.image = UIImage(named: icon)
         onInit?(tagContent)
         return tagContent
     }
 }
 
 
-public class TagPresentableIconText: TagPresentable {
+public struct TagPresentableIconText: TagPresentable {
     
     public private(set) var tag: String = ""
+    public private(set) var icon: String = ""
     public var isSelected: Bool = false
     private var onInit: ((TagContentIconText) -> Void)?
     
-    init(_ tag: String, onInit: ((TagContentIconText) -> Void)? = nil) {
+    public init(_ tag: String, icon: String, onInit: ((TagContentIconText) -> Void)? = nil) {
         self.tag = tag
+        self.icon = icon
         self.onInit = onInit
     }
     
     public func createTagContent() -> TagContent {
         let tagContent = TagContentIconText(tag: tag)
+        tagContent.icon.image = UIImage(named: icon)
         onInit?(tagContent)
         return tagContent
     }
