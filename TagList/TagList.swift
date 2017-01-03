@@ -271,8 +271,10 @@ open class TagList: UIView {
         case .single:
             tag.isSelected = !tag.isSelected
             if tag.isSelected {
-                tags.forEach({ (tag) in
-                    tag.isSelected = false
+                tags.forEach({ (other) in
+                    if other != tag {
+                        other.isSelected = false
+                    }
                 })
             }
         case .multiple:
@@ -291,6 +293,9 @@ extension TagList: TagDelegate {
     }
     
     func tagActionTriggered(tag: Tag, action: TagAction) {
+        if let index = index(of: tag) {
+            delegate?.tagActionTriggered(tagList: self, action: action, content: tag.content, index: index)
+        }
         switch action {
         case .tap:
             onTagTap(tag: tag)
@@ -300,9 +305,6 @@ extension TagList: TagDelegate {
             }
         default:
             break
-        }
-        if let index = index(of: tag) {
-            delegate?.tagActionTriggered(tagList: self, action: action, content: tag.content, index: index)
         }
     }
 }

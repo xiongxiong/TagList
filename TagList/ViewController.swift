@@ -10,16 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var addText: UITextField = {
-        let view = UITextField()
-        view.placeholder = "input new tag"
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     var addBtn: UIButton = {
         let view = UIButton()
-        view.setTitle("add tag", for: .normal)
-        view.setTitleColor(UIColor.black, for: .normal)
+        view.setTitle("Add Tag", for: .normal)
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.blue.cgColor
+        view.layer.cornerRadius = 10
+        view.setTitleColor(UIColor.blue, for: .normal)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -31,6 +28,7 @@ class ViewController: UIViewController {
     }()
     var alignHorizontalSegment: UISegmentedControl = {
         let view = UISegmentedControl(items: ["left", "center", "right"])
+        view.selectedSegmentIndex = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -42,6 +40,7 @@ class ViewController: UIViewController {
     }()
     var alignVerticalSegment: UISegmentedControl = {
         let view = UISegmentedControl(items: ["top", "center", "bottom"])
+        view.selectedSegmentIndex = 1
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -53,6 +52,7 @@ class ViewController: UIViewController {
     }()
     var selectSegment: UISegmentedControl = {
         let view = UISegmentedControl(items: ["none", "single", "multi"])
+        view.selectedSegmentIndex = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -114,7 +114,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(addText)
         view.addSubview(addBtn)
         view.addSubview(selectLabel)
         view.addSubview(selectSegment)
@@ -141,18 +140,14 @@ class ViewController: UIViewController {
         tagList.delegate = self
         
         // ==================================
-        view.addConstraint(NSLayoutConstraint(item: addText, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: addText, attribute: .trailing, relatedBy: .equal, toItem: addBtn, attribute: .leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: addText, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: addText, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 50))
-        
+        view.addConstraint(NSLayoutConstraint(item: addBtn, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: addBtn, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: addBtn, attribute: .top, relatedBy: .equal, toItem: addText, attribute: .top, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: addBtn, attribute: .height, relatedBy: .equal, toItem: addText, attribute: .height, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: addBtn, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: addBtn, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 40))
         // ==================================
         view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .trailing, relatedBy: .equal, toItem: selectSegment, attribute: .leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .top, relatedBy: .equal, toItem: addText, attribute: .bottom, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .top, relatedBy: .equal, toItem: addBtn, attribute: .bottom, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 50))
         
         view.addConstraint(NSLayoutConstraint(item: selectSegment, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
@@ -239,15 +234,15 @@ class ViewController: UIViewController {
     func switchDelete() {
         if switchDeleteBtn.isOn {
             tagList.tags.forEach { (tag) in
-                tag.wrappers = []
-            }
-        } else {
-            tagList.tags.forEach { (tag) in
                 tag.wrappers = [TagWrapperRemover(onInit: {
                     $0.space = 8
                 }) {
                     $0.deleteButton.tintColor = $1 ? UIColor.white : UIColor.black
                     }]
+            }
+        } else {
+            tagList.tags.forEach { (tag) in
+                tag.wrappers = []
             }
         }
     }
