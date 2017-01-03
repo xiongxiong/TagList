@@ -233,7 +233,7 @@ class ViewController: UIViewController {
     }
     
     func switchSeparate() {
-        tagList.isSeparated = switchSeparateBtn.isOn
+        tagList.isSeparatorEnabled = switchSeparateBtn.isOn
     }
     
     func switchDelete() {

@@ -17,8 +17,8 @@ protocol TagWrapperDelegate: TagActionable, TagActionDelegate, TagStatable, TagS
 
 open class TagWrapper: UIView, TagWrapperDelegate {
     
-    public weak var actionDelegate: TagActionDelegate?
-    public weak var stateDelegate: TagStateDelegate?
+    weak var actionDelegate: TagActionDelegate?
+    weak var stateDelegate: TagStateDelegate?
     
     var target: UIView?
     
@@ -74,11 +74,11 @@ open class TagWrapper: UIView, TagWrapperDelegate {
         addConstraint(NSLayoutConstraint(item: target, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
     }
     
-    public func tagActionTriggered(action: TagAction) {
-        actionDelegate?.tagActionTriggered(action: action)
+    func tagSelected(_ isSelected: Bool) {
+        stateDelegate?.tagSelected(isSelected)
     }
     
-    public func tagSelected(_ isSelected: Bool) {
-        stateDelegate?.tagSelected(isSelected)
+    public func tagActionTriggered(action: TagAction) {
+        actionDelegate?.tagActionTriggered(action: action)
     }
 }

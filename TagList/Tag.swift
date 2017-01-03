@@ -17,7 +17,7 @@ protocol TagDelegate: NSObjectProtocol {
 open class Tag: UIView {
 
     weak var delegate: TagDelegate?
-    public weak var stateDelegate: TagStateDelegate?
+    weak var stateDelegate: TagStateDelegate?
     
     public private(set) var content: TagPresentable
     public var wrappers: [TagWrapper] = [] {
@@ -25,7 +25,7 @@ open class Tag: UIView {
             update()
         }
     }
-    public var padding: UIEdgeInsets = UIEdgeInsets.zero {
+    public var padding: UIEdgeInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3) {
         didSet {
             update()
         }
@@ -93,7 +93,7 @@ open class Tag: UIView {
         tagSelected()
     }
     
-    public func tagSelected() {
+    func tagSelected() {
         content.isSelected = isSelected
         onSelect?(self)
         delegate?.tagUpdated()

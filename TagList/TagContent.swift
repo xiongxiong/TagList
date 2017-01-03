@@ -8,30 +8,30 @@
 
 import UIKit
 
-public protocol TagActionable {
+protocol TagActionable {
     
     var actionDelegate: TagActionDelegate? { get set }
 }
 
-public protocol TagActionDelegate: NSObjectProtocol {
+protocol TagActionDelegate: NSObjectProtocol {
     
     func tagActionTriggered(action: TagAction)
 }
 
-public protocol TagStatable {
+protocol TagStatable {
     
     var stateDelegate: TagStateDelegate? { get set }
 }
 
-public protocol TagStateDelegate: NSObjectProtocol {
+protocol TagStateDelegate: NSObjectProtocol {
     
     func tagSelected(_ isSelected: Bool)
 }
 
 open class TagContent: UIView, TagActionable, TagStatable {
     
-    public weak var actionDelegate: TagActionDelegate?
-    public weak var stateDelegate: TagStateDelegate?
+    weak var actionDelegate: TagActionDelegate?
+    weak var stateDelegate: TagStateDelegate?
     
     private(set) var content: String
     

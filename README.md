@@ -1,30 +1,31 @@
-# ActionCell
+# TagList
 
-[![CI Status](http://img.shields.io/travis/wonderbear/ActionCell.svg?style=flat)](https://travis-ci.org/wonderbear/ActionCell) [![Version](https://img.shields.io/cocoapods/v/ActionCell.svg?style=flat)](http://cocoapods.org/pods/ActionCell) [![Platform](https://img.shields.io/cocoapods/p/ActionCell.svg?style=flat)](http://cocoapods.org/pods/ActionCell)
-[![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![License](https://img.shields.io/cocoapods/l/ActionCell.svg?style=flat)](http://cocoapods.org/pods/ActionCell)
+[![CI Status](http://img.shields.io/travis/wonderbear/TagList.svg?style=flat)](https://travis-ci.org/wonderbear/TagList) [![Version](https://img.shields.io/cocoapods/v/TagList.svg?style=flat)](http://cocoapods.org/pods/TagList) [![Platform](https://img.shields.io/cocoapods/p/TagList.svg?style=flat)](http://cocoapods.org/pods/TagList)
+[![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![License](https://img.shields.io/cocoapods/l/TagList.svg?style=flat)](http://cocoapods.org/pods/TagList)
 
-Easy to use UITableViewCell implementing swiping to trigger actions (known from the Mailbox App)
+TagList, flexible tag list view, easy to use & extend. I love it.
 
-![ActionCell](ScreenShot/ActionCell.gif "ActionCell")
+![TagList](ScreenShot/TagList.gif "TagList")
 
 ## Contents
 
-- [Features](#features)
-- [Requirements](#requirements)
-- [Example](#example)
-- [Installation](#installation)
-- [Protocols](#protocols)
-- [Usage](#usage)
-- [Properties](#properties)
-- [Author](#author)
-- [License](#license)
+- [Features](#Features)
+- [Requirements](#Requirements)
+- [Demo](#Demo)
+- [Installation](#Installation)
+- [Protocols](#Protocols)
+- [Usage](#Usage)
+- [Properties](#Properties & Methods)
+- [Author](#Author)
+- [License](#License)
 
 ## Features
 
-- [x] Flexible action support
-- [x] Support default action
-- [x] Customized action width
-- [x] Customized action control
+- [x] Tag interaction
+- [x] Self sizing
+- [x] Easy to use
+- [x] Customizable
+- [x] Easy to extend
 
 ## Requirements
 
@@ -42,7 +43,7 @@ Easy to use UITableViewCell implementing swiping to trigger actions (known from 
 $ gem install cocoapods
 ```
 
-To integrate ActionCell into your Xcode project using CocoaPods, specify it in your `Podfile`:
+To integrate TagList into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
@@ -50,7 +51,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'ActionCell', '~> 1.0.0'
+    pod 'TagList', '~> 0.2.0'
 end
 ```
 
@@ -71,123 +72,195 @@ $ brew update
 $ brew install carthage
 ```
 
-To integrate ActionCell into your Xcode project using Carthage, specify it in your `Cartfile`:
+To integrate TagList into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "xiongxiong/ActionCell" ~> 1.0.0
+github "xiongxiong/TagList" ~> 0.2.0
 ```
 
-Run `carthage update` to build the framework and drag the built `ActionCell.framework` into your Xcode project.
+Run `carthage update` to build the framework and drag the built `TagList.framework` into your Xcode project.
 
 ### Manually
 
-If you prefer not to use either of the aforementioned dependency managers, you can integrate ActionCell into your project manually.
+If you prefer not to use either of the aforementioned dependency managers, you can integrate TagList into your project manually.
 
-## Example
+## Demo
 
-Open the example project, build and run.
+Open the demo project, build and run.
 
 ## Protocols
 
-### CellActionProtocol
-
+### TagListDelegate
 ```swift
-public protocol CellActionProtocol {
-    func setForeColor(color: UIColor)
-    func setForeAlpha(alpha: CGFloat)
+public protocol TagListDelegate: NSObjectProtocol {
+
+    func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int)
+    func tagListUpdated(tagList: TagList)
+}
+```
+
+### TagPresentable
+```swift
+public protocol TagPresentable {
+
+    var tag: String { get }
+    var isSelected: Bool { get set }
+
+    func createTagContent() -> TagContent
+}
+```
+
+### TagActionable
+```swift
+public protocol TagActionable {
+
+    var actionDelegate: TagActionDelegate? { get set }
+}
+```
+
+### TagActionDelegate
+```swift
+public protocol TagActionDelegate: NSObjectProtocol {
+
+    func tagActionTriggered(action: TagAction)
+}
+```
+
+### TagStatable
+```swift
+public protocol TagStatable {
+
+    var stateDelegate: TagStateDelegate? { get set }
+}
+```
+
+### TagStateDelegate
+```swift
+public protocol TagStateDelegate: NSObjectProtocol {
+
+    func tagSelected(_ isSelected: Bool)
+}
+```
+
+### TagWrapperDelegate
+```swift
+protocol TagWrapperDelegate: TagActionable, TagActionDelegate, TagStatable, TagStateDelegate {
+
+    func wrap(target: TagContent) -> TagWrapper
+    func wrap(wrapper: TagWrapper) -> TagWrapper
 }
 ```
 
 ## Usage
 
-### Inherit ActionControl & implement CellActionProtocol
-
+### Implement TagListDelegate [Optional]
 ```swift
-public class ActionControl: UIControl {}
-```
+extension ViewController: TagListDelegate {
 
-```swift
-public class TextAction: ActionControl, CellActionProtocol {
-    var label: UILabel = UILabel()
-    ...
-
-    public func setForeColor(color: UIColor) {
-        label.tintColor = color
+    // Called when tagList's content changed
+    func tagListUpdated(tagList: TagList) {
+        ...
     }
 
-    public func setForeAlpha(alpha: CGFloat) {
-        label.alpha = alpha
+    // Tag interaction
+    func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int) {
+        ...
     }
-  }
+}
 ```
 
-IconAction & TextAction are already implemented, you can use it straightforwardly without implementing CellActionProtocol, or you can choose to implement CellActionProtocol to use your own ActionControl.
-
-### Initialize ActionCell
-
+### Initialize TagList
 ```swift
-func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch (indexPath as NSIndexPath).row {
-        case 0:
-            let cell = ActionCell<IconAction>() // create ActionCell
-            cell.textLabel?.text = "Colorful actions"
-            cell.defaultActionIndexLeft = 1 // set default action index to be triggered, default is the first one.
-            cell.actionsLeft = [
-                IconAction(iconImage: UIImage(named: "0")!, backColor: UIColor(red:0.95, green:0.33, blue:0.58, alpha:1.00)) {
-                    self.output.text = ("cell 0 -- left 0 clicked")
-                },
-                IconAction(iconImage: UIImage(named: "1")!, backColor: UIColor(red:1.00, green:0.78, blue:0.80, alpha:1.00), width: 140) {
-                    self.output.text = ("cell 0 -- left 1 clicked")
-                },
-                IconAction(iconImage: UIImage(named: "2")!, backColor: UIColor(red:0.51, green:0.83, blue:0.73, alpha:1.00)) {
-                    self.output.text = ("cell 0 -- left 2 clicked")
-                },
-            ] // set actions of the action cell
-            cell.defaultActionIndexRight = 2 // set default action index to be triggered, default is the first one.
-            cell.actionsRight = [
-                IconAction(iconImage: UIImage(named: "0")!, backColor: UIColor(red:0.14, green:0.69, blue:0.67, alpha:1.00)) {
-                    self.output.text = ("cell 0 -- left 0 clicked")
-                },
-                IconAction(iconImage: UIImage(named: "1")!, backColor: UIColor(red:0.51, green:0.83, blue:0.73, alpha:1.00)) {
-                    self.output.text = ("cell 0 -- left 1 clicked")
-                },
-                IconAction(iconImage: UIImage(named: "2")!, backColor: UIColor(red:1.00, green:0.78, blue:0.80, alpha:1.00), width: 140) {
-                    self.output.text = ("cell 0 -- left 2 clicked")
-                },
-            ] // set actions of the action cell
-            return cell
-        default:
-          break
-        }
+let view = TagList()
+view.delegate = self
+view.backgroundColor = UIColor.yellow
+view.tagMargin = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
+view.separator.image = #imageLiteral(resourceName: "icon_arrow_right")
+view.separator.size = CGSize(width: 16, height: 16)
+view.separator.margin = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+...
 ```
 
-## Properties
+### Customizable
+TagPresentableText, TagPresentableIcon & TagPresentableIconText are already implemented, you can use it straightforwardly, or you can choose to implement TagPresentable and subclass TagContent to create your own tag.
 
-### Actions
+## Properties & Methods
 
-- actionsLeft: [CellAction] // Actions - Left
-- actionsRight: [CellAction] // Actions - Right
+### TagList
 
-### Style
-- animationStyle: AnimationStyle = none | ladder | ladder_emergence | concurrent // Action animation style
-- defaultActionTriggerPropotion: CGFloat // The propotion of (state public to state trigger-prepare / state public to state trigger), about where the default action is triggered
-- defaultActionIconColor: UIColor? // Default action's icon color
-- defaultActionBackImage: UIImage? // Default action's back image
-- defaultActionBackColor: UIColor? // Default action's back color
+#### Properties
+```swift
+var delegate: TagListDelegate?
+var tags: [Tag] = []
+var horizontalAlignment: TagHorizontalAlignment = .left | .right | .center
+var verticalAlignment: TagVerticalAlignment = .left | .right | .center
+var tagMargin = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+var separator: SeparatorInfo = SeparatorInfo()
+var isSeparatorEnabled = false
+var isAutowrap = true
+var selectionMode: TagSelectionMode = .none | .single | .multiple
+```
 
-### Behavior
+#### Manage tags
+```swift
+func tagPresentables() -> [TagPresentable]
+func selectedTagPresentables() -> [TagPresentable]
+```
 
-- enableDefaultAction: Bool // Enable default action to be triggered when the content is panned to far enough
-- defaultActionIndexLeft: Int // Index of default action - Left
-- defaultActionIndexRight: Int // Index of default action - Right
+#### Example
+```swift
+let tag = Tag(content: TagPresentableText("...") {
+            $0.label.font = UIFont.systemFont(ofSize: 16)
+            }, onInit: {
+                $0.padding = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
+                $0.layer.borderColor = UIColor.cyan.cgColor
+                $0.layer.borderWidth = 2
+                $0.layer.cornerRadius = 5
+            }, onSelect: {
+            $0.backgroundColor = $0.isSelected ? UIColor.orange : UIColor.white
+        })
+tag.wrappers = [TagWrapperRemover(onInit: {
+                    $0.space = 8
+                }) {
+                    $0.deleteButton.tintColor = $1 ? UIColor.white : UIColor.black
+              }]
+tagList.tags.append(tag)
+```
 
-### Animation
+### Tag
 
-- animationDuration: NSTimeInterval // Spring animation - duration of the animation
-- animationDelay: TimeInterval // Spring animation - delay of the animation
-- springDamping: CGFloat // Spring animation - spring damping of the animation
-- initialSpringVelocity: CGFloat // Spring animation - initial spring velocity of the animation
-- animationOptions: UIViewAnimationOptions // Spring animation - options of the animation
+#### Initialization
+```swift
+init(content: TagPresentable, onInit: ((Tag) -> Void)? = nil, onSelect: ((Tag) -> Void)? = nil)
+```
+
+#### Properties
+```swift
+var content: TagPresentable { get }
+var wrappers: [TagWrapper] = []
+var padding: UIEdgeInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+var isSelected: Bool
+```
+
+### TagPresentableText
+```swift
+init(_ tag: String, onContentInit: ((TagContentText) -> Void)? = nil)
+```
+
+### TagPresentableIcon
+```swift
+init(_ tag: String, icon: String, onContentInit: ((TagContentIcon) -> Void)? = nil)
+```
+
+### TagPresentableIconText
+```swift
+init(_ tag: String, icon: String, onContentInit: ((TagContentIconText) -> Void)? = nil)
+```
+
+### TagWrapperRemover
+```swift
+init(onInit: ((TagWrapperRemover) -> Void)? = nil, onSelect: ((TagWrapperRemover, Bool) -> Void)? = nil)
+```
 
 ## Author
 
@@ -195,4 +268,4 @@ xiongxiong, ximengwuheng@163.com
 
 ## License
 
-ActionCell is available under the MIT license. See the LICENSE file for more info.
+TagList is available under the MIT license. See the LICENSE file for more info.

@@ -35,7 +35,7 @@ open class TagList: UIView {
             update()
         }
     }
-    public var tagMargin = UIEdgeInsets.zero {
+    public var tagMargin = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3) {
         didSet {
             update()
         }
@@ -45,7 +45,7 @@ open class TagList: UIView {
             update()
         }
     }
-    public var isSeparated = false {
+    public var isSeparatorEnabled = false {
         didSet {
             update()
         }
@@ -98,7 +98,6 @@ open class TagList: UIView {
     }
     
     // MARK: - Layout
-    
     func update() {
         rows = []
         subviews.forEach { (view) in
@@ -230,7 +229,6 @@ open class TagList: UIView {
     }
     
     // MARK: - Manage tags
-    
     public func tagPresentables() -> [TagPresentable] {
         return tags.map { (tag) -> TagPresentable in
             tag.content
@@ -252,12 +250,11 @@ open class TagList: UIView {
     }
     
     // MARK: - Custom
-    
     func getTagViews() -> [UIView] {
         return tags.enumerated().map { (index, tag) -> UIView in
             tag.delegate = self
             var tagView: UIView = tag
-            if isSeparated && index < tags.count - 1 {
+            if isSeparatorEnabled && index < tags.count - 1 {
                 let wrapper = SeparatorWrapper(info: separator)
                 tagView = wrapper.wrap(tagView)
             }
