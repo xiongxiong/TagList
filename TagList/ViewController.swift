@@ -81,8 +81,6 @@ class ViewController: UIViewController {
     var areaSelected: UIScrollView = {
         let view = UIScrollView()
         view.backgroundColor = UIColor.lightGray
-        view.showsHorizontalScrollIndicator = true
-        view.showsVerticalScrollIndicator = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
