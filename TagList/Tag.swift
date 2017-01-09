@@ -20,23 +20,14 @@ open class Tag: UIView {
     weak var stateDelegate: TagStateDelegate?
     
     public private(set) var content: TagPresentable
-    public var wrappers: [TagWrapper] = [] {
-        didSet {
-            update()
-        }
-    }
-    public var padding: UIEdgeInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3) {
-        didSet {
-            update()
-        }
-    }
+    public var wrappers: [TagWrapper] = []
+    public var padding: UIEdgeInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
     public var isSelected: Bool {
         get {
             return content.isSelected
         }
         set {
             content.isSelected = newValue
-            tagSelected()
         }
     }
     
@@ -69,6 +60,8 @@ open class Tag: UIView {
     }
     
     func onTap() {
+        isSelected = !isSelected
+        update()
         tagActionTriggered(action: .tap)
     }
     
@@ -80,6 +73,9 @@ open class Tag: UIView {
         tagContent = content.createTagContent()
         tagContent.actionDelegate = self
         stateDelegate = tagContent
+        
+        onSelect?(self)
+        stateDelegate?.tagSelected(isSelected)
         wrapped = TagWrapper().wrap(target: tagContent)
         wrapped = wrappers.reduce(wrapped) { (result, element) in
             element.wrap(wrapper: result)
@@ -90,14 +86,7 @@ open class Tag: UIView {
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
-        tagSelected()
-    }
-    
-    func tagSelected() {
-        content.isSelected = isSelected
-        onSelect?(self)
         delegate?.tagUpdated()
-        stateDelegate?.tagSelected(isSelected)
     }
 }
 

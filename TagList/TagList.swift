@@ -243,6 +243,12 @@ open class TagList: UIView {
         })
     }
     
+    public func clearSelected() {
+        tags.forEach { (tag) in
+            tag.isSelected = false
+        }
+    }
+    
     func index(of tag: Tag) -> Int? {
         return tags.index(where: {
             $0 == tag
@@ -269,7 +275,6 @@ open class TagList: UIView {
     func onTagTap(tag: Tag) {
         switch selectionMode {
         case .single:
-            tag.isSelected = !tag.isSelected
             if tag.isSelected {
                 tags.forEach({ (other) in
                     if other != tag {
@@ -277,8 +282,6 @@ open class TagList: UIView {
                     }
                 })
             }
-        case .multiple:
-            tag.isSelected = !tag.isSelected
         default:
             break
         }

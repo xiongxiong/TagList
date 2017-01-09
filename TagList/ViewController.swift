@@ -225,6 +225,9 @@ class ViewController: UIViewController {
     
     func switchSelect() {
         tagList.selectionMode = [TagSelectionMode.none, TagSelectionMode.single, TagSelectionMode.multiple][selectSegment.selectedSegmentIndex]
+        if tagList.selectionMode == TagSelectionMode.none {
+            tagList.clearSelected()
+        }
     }
     
     func switchSeparate() {
@@ -276,9 +279,7 @@ extension ViewController: TagListDelegate {
                         $0.layer.borderColor = UIColor.cyan.cgColor
                         $0.layer.borderWidth = 2
                         $0.layer.cornerRadius = 5
-                }, onSelect: {
-                    $0.backgroundColor = $0.isSelected ? UIColor.orange : UIColor.white
-                })
+                    })
             })
         }
     }
