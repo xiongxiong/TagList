@@ -9,15 +9,15 @@ TagList, flexible tag list view, easy to use & extend. I love it.
 
 ## Contents
 
-- [Features](#Features)
-- [Requirements](#Requirements)
-- [Demo](#Demo)
-- [Installation](#Installation)
-- [Protocols](#Protocols)
-- [Usage](#Usage)
-- [Properties](#Properties & Methods)
-- [Author](#Author)
-- [License](#License)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Demo](#demo)
+- [Installation](#installation)
+- [Protocols](#protocols)
+- [Usage](#usage)
+- [Properties](#properties & methods)
+- [Author](#author)
+- [License](#license)
 
 ## Features
 
@@ -152,6 +152,11 @@ protocol TagWrapperDelegate: TagActionable, TagActionDelegate, TagStatable, TagS
 ```
 
 ## Usage
+
+### Import SwiftTagList
+```swift
+import SwiftTagList
+```
 
 ### Implement TagListDelegate [Optional]
 ```swift
