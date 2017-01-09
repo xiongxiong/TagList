@@ -31,6 +31,7 @@ TagList, flexible tag list view, easy to use & extend. I love it.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'TagList/**/*.{h,swift}'
+  s.resources = 'TagList/**/*.{png}'
   # s.resource_bundles = {
   #   'TagList' => ['TagList/Assets/**/*.png']
   # }
