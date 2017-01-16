@@ -32,7 +32,7 @@ TagList, flexible tag list view, easy to use & extend. I love it.
 
   s.source_files = 'TagList/**/*.{h,swift}'
   s.resource_bundles = {
-    'Resources' => ['TagList/Assets/**/*.png']
+    'Resources' => ['TagList/Media.xcassets/**/*.png']
   }
 
   s.public_header_files = 'TagList/**/*.h'
