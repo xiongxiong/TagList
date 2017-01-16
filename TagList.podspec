@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TagList'
-  s.version          = '0.2.9'
+  s.version          = '0.2.10'
   s.summary          = 'TagList, flexible tag list view, easy to use & extend.'
 
 # This description is used to generate tags and improve search results.
