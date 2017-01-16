@@ -225,6 +225,7 @@ let tag = Tag(content: TagPresentableText("...") {
             $0.backgroundColor = $0.isSelected ? UIColor.orange : UIColor.white
         })
 tag.wrappers = [TagWrapperRemover(onInit: {
+                    $0.deleteButton.setImage(UIImage(named: "icon_delete")).withRenderingMode(.alwaysTemplate), for: .normal)
                     $0.space = 8
                 }) {
                     $0.deleteButton.tintColor = $1 ? UIColor.white : UIColor.black

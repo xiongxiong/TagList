@@ -25,7 +25,6 @@ open class TagWrapperRemover: TagWrapper {
         onInit?(self)
         
         deleteButton.contentMode = .scaleAspectFit
-        deleteButton.setImage(#imageLiteral(resourceName: "icon_delete").withRenderingMode(.alwaysTemplate), for: .normal)
         deleteButton.addTarget(self, action: #selector(didRemove), for: .touchUpInside)
     }
     

@@ -29,7 +29,6 @@
 		4233BD751E06C0D200BDB8C1 /* TagWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671751DFF9EFA0075B70F /* TagWrapper.swift */; };
 		4233BD761E06C0D200BDB8C1 /* TagWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */; };
 		42AF1F441E01124F0048417E /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AF1F431E01124F0048417E /* Tag.swift */; };
-		42EBE5881E2D80EE0035FA1C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42EBE5871E2D80EE0035FA1C /* Media.xcassets */; };
 		42F1236F1E02602F00CA0DED /* SeparatorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */; };
 		42F123711E02605C00CA0DED /* TagPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F123701E02605C00CA0DED /* TagPresentable.swift */; };
 /* End PBXBuildFile section */
@@ -52,7 +51,6 @@
 		4233BD671E06C0BB00BDB8C1 /* TagList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagList.h; sourceTree = "<group>"; };
 		4233BD681E06C0BB00BDB8C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42AF1F431E01124F0048417E /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		42EBE5871E2D80EE0035FA1C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorWrapper.swift; sourceTree = "<group>"; };
 		42F123701E02605C00CA0DED /* TagPresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,7 +118,6 @@
 				4226ABFB1E03B90000AD40D2 /* TagPresentables.swift */,
 				420671751DFF9EFA0075B70F /* TagWrapper.swift */,
 				4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */,
-				42EBE5871E2D80EE0035FA1C /* Media.xcassets */,
 			);
 			name = TagList;
 			sourceTree = "<group>";
@@ -238,7 +235,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42EBE5881E2D80EE0035FA1C /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
