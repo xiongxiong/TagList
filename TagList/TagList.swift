@@ -10,14 +10,14 @@ import UIKit
 
 public protocol TagListDelegate: NSObjectProtocol {
     
-    func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int)
     func tagListUpdated(tagList: TagList)
+    func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int)
 }
 
 extension TagListDelegate {
     
-    func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int) {}
     func tagUpdated(tagList: TagList) {}
+    func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int) {}
 }
 
 open class TagList: UIView {
@@ -229,12 +229,14 @@ open class TagList: UIView {
     }
     
     // MARK: - Manage tags
+    /// TagList's TagPresentables
     public func tagPresentables() -> [TagPresentable] {
         return tags.map { (tag) -> TagPresentable in
             tag.content
         }
     }
-
+    
+    /// TagList's selected TagPresentables
     public func selectedTagPresentables() -> [TagPresentable] {
         return tags.map({ (tag) -> TagPresentable in
             tag.content
@@ -243,6 +245,7 @@ open class TagList: UIView {
         })
     }
     
+    /// Clear TagList's tags' selected state
     public func clearSelected() {
         tags.forEach { (tag) in
             tag.isSelected = false
