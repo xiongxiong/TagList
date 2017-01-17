@@ -186,6 +186,15 @@ view.separator.margin = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
 ...
 ```
 
+### Set Frame
+```swift
+override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        tagList.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: areaList.frame.width, height: 0))
+    }
+```
+
 ### Customizable
 TagPresentableText, TagPresentableIcon & TagPresentableIconText are already implemented, you can use it straightforwardly, or you can choose to implement TagPresentable and subclass TagContent to create your own tag.
 
