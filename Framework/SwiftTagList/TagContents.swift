@@ -38,20 +38,14 @@ public class TagContentText: TagContent {
 public class TagContentIcon: TagContent {
     
     public var icon = UIImageView()
-    public var height: CGFloat = 0
+    public var height: CGFloat
     
     open override var intrinsicContentSize: CGSize {
-        var size = CGSize.zero
-        if let image = icon.image {
-            if image.size.height != 0 {
-                let ratio = image.size.width / image.size.height
-                size = CGSize(width: height * ratio, height: height)
-            }
-        }
-        return size
+        return CGSize(width: height, height: height)
     }
     
-    public override init(tag: String) {
+    public init(tag: String, height: CGFloat) {
+        self.height = height
         super.init(tag: tag)
         
         addSubview(icon)
@@ -79,14 +73,7 @@ public class TagContentIconText: TagContent {
     
     open override var intrinsicContentSize: CGSize {
         let labelSize = label.intrinsicContentSize
-        var imageSize = CGSize.zero
-        if let image = icon.image {
-            if image.size.height != 0 {
-                let ratio = image.size.width / image.size.height
-                imageSize = CGSize(width: labelSize.width + space + labelSize.height * ratio, height: labelSize.height)
-            }
-        }
-        return CGSize(width: imageSize.width + labelSize.height + space, height: labelSize.height)
+        return CGSize(width: labelSize.width + labelSize.height + space, height: labelSize.height)
     }
     
     public override init(tag: String) {
@@ -95,19 +82,20 @@ public class TagContentIconText: TagContent {
         addSubview(icon)
         addSubview(label)
         
+        label.text = tag
+        label.translatesAutoresizingMaskIntoConstraints = false
+        addConstraint(NSLayoutConstraint(item: label, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+        
         icon.contentMode = .scaleAspectFit
+        icon.image = UIImage(named: tag)
         icon.translatesAutoresizingMaskIntoConstraints = false
         addConstraint(NSLayoutConstraint(item: icon, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: icon, attribute: .width, relatedBy: .equal, toItem: label, attribute: .height, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: icon, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: icon, attribute: .height, relatedBy: .equal, toItem: label, attribute: .height, multiplier: 1, constant: 0))
         
-        label.translatesAutoresizingMaskIntoConstraints = false
-        addConstraint(NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: icon, attribute: .trailing, multiplier: 1, constant: space))
-        addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
-        
-        icon.image = UIImage(named: tag)
-        label.text = tag
     }
     
     public required init?(coder aDecoder: NSCoder) {

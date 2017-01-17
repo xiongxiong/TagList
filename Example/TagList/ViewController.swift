@@ -21,6 +21,30 @@ class ViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    var typeLabel: UILabel = {
+        let view = UILabel()
+        view.text = "tag type"
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    var typeSegment: UISegmentedControl = {
+        let view = UISegmentedControl(items: ["text", "icon", "icon & text"])
+        view.selectedSegmentIndex = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    var selectLabel: UILabel = {
+        let view = UILabel()
+        view.text = "multi selection"
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    var selectSegment: UISegmentedControl = {
+        let view = UISegmentedControl(items: ["none", "single", "multi"])
+        view.selectedSegmentIndex = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     var alignHorizontalLabel: UILabel = {
         let view = UILabel()
         view.text = "horizontal alignment"
@@ -42,18 +66,6 @@ class ViewController: UIViewController {
     var alignVerticalSegment: UISegmentedControl = {
         let view = UISegmentedControl(items: ["top", "center", "bottom"])
         view.selectedSegmentIndex = 1
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    var selectLabel: UILabel = {
-        let view = UILabel()
-        view.text = "multi selection"
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    var selectSegment: UISegmentedControl = {
-        let view = UISegmentedControl(items: ["none", "single", "multi"])
-        view.selectedSegmentIndex = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -118,6 +130,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(addBtn)
+        view.addSubview(typeLabel)
+        view.addSubview(typeSegment)
         view.addSubview(selectLabel)
         view.addSubview(selectSegment)
         view.addSubview(alignHorizontalLabel)
@@ -134,6 +148,7 @@ class ViewController: UIViewController {
         areaList.addSubview(tagList)
         
         addBtn.addTarget(self, action: #selector(addTag), for: .touchUpInside)
+        typeSegment.addTarget(self, action: #selector(switchType), for: .valueChanged)
         selectSegment.addTarget(self, action: #selector(switchSelect), for: .valueChanged)
         alignHorizontalSegment.addTarget(self, action: #selector(switchHorizontalAlign), for: .valueChanged)
         alignVerticalSegment.addTarget(self, action: #selector(switchVerticalAlign), for: .valueChanged)
@@ -148,9 +163,18 @@ class ViewController: UIViewController {
         view.addConstraint(NSLayoutConstraint(item: addBtn, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: addBtn, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 40))
         // ==================================
+        view.addConstraint(NSLayoutConstraint(item: typeLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: typeLabel, attribute: .trailing, relatedBy: .equal, toItem: selectSegment, attribute: .leading, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: typeLabel, attribute: .top, relatedBy: .equal, toItem: addBtn, attribute: .bottom, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: typeLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 50))
+        
+        view.addConstraint(NSLayoutConstraint(item: typeSegment, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: typeSegment, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 160))
+        view.addConstraint(NSLayoutConstraint(item: typeSegment, attribute: .centerY, relatedBy: .equal, toItem: typeLabel, attribute: .centerY, multiplier: 1, constant: 0))
+        // ==================================
         view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .trailing, relatedBy: .equal, toItem: selectSegment, attribute: .leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .top, relatedBy: .equal, toItem: addBtn, attribute: .bottom, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .top, relatedBy: .equal, toItem: typeLabel, attribute: .bottom, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: selectLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 50))
         
         view.addConstraint(NSLayoutConstraint(item: selectSegment, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
@@ -211,11 +235,23 @@ class ViewController: UIViewController {
     
     func addTag() {
         let str = "In 1886 he moved to Paris where he met members of the avant-garde"
+        let icons = ["tag_0","tag_1","tag_2","tag_3","tag_4","tag_5","tag_6","tag_7","tag_8","tag_9"]
         let tagArr = str.components(separatedBy: .whitespaces)
         let tagStr = tagArr[Int(arc4random_uniform(UInt32(tagArr.count)))]
-        let tag = Tag(content: TagPresentableText(tagStr) {
-            $0.label.font = UIFont.systemFont(ofSize: 16)
-            }, onInit: {
+        var newPresent: TagPresentable!
+        switch typeSegment.selectedSegmentIndex {
+        case 1:
+            newPresent = TagPresentableIcon(tag: tagStr, icon: icons[Int(arc4random_uniform(UInt32(icons.count)))], height: 30)
+        case 2:
+            newPresent = TagPresentableIconText(tag: tagStr, icon: icons[Int(arc4random_uniform(UInt32(icons.count)))]) {
+                $0.label.font = UIFont.systemFont(ofSize: 16)
+            }
+        default:
+            newPresent = TagPresentableText(tag: tagStr) {
+                $0.label.font = UIFont.systemFont(ofSize: 16)
+            }
+        }
+        let tag = Tag(content: newPresent, onInit: {
                 $0.padding = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
                 $0.layer.borderColor = UIColor.cyan.cgColor
                 $0.layer.borderWidth = 2
@@ -233,6 +269,43 @@ class ViewController: UIViewController {
                 }]
         }
         tagList.tags.append(tag)
+    }
+    
+    func switchType() {
+        let icons = ["tag_0","tag_1","tag_2","tag_3","tag_4","tag_5","tag_6","tag_7","tag_8","tag_9"]
+        tagList.tags = tagList.tagPresentables().map({ (present) -> Tag in
+            var newPresent: TagPresentable!
+            switch typeSegment.selectedSegmentIndex {
+            case 1:
+                newPresent = TagPresentableIcon(tag: present.tag, icon: icons[Int(arc4random_uniform(UInt32(icons.count)))], height: 30)
+            case 2:
+                newPresent = TagPresentableIconText(tag: present.tag, icon: icons[Int(arc4random_uniform(UInt32(icons.count)))]) {
+                    $0.label.font = UIFont.systemFont(ofSize: 16)
+                }
+            default:
+                newPresent = TagPresentableText(tag: present.tag) {
+                    $0.label.font = UIFont.systemFont(ofSize: 16)
+                }
+            }
+            let tag = Tag(content: newPresent, onInit: {
+                $0.padding = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
+                $0.layer.borderColor = UIColor.cyan.cgColor
+                $0.layer.borderWidth = 2
+                $0.layer.cornerRadius = 5
+                $0.backgroundColor = UIColor.white
+            }, onSelect: {
+                $0.backgroundColor = $0.isSelected ? UIColor.orange : UIColor.white
+            })
+            if swiDelete {
+                tag.wrappers = [TagWrapperRemover(onInit: {
+                    $0.space = 8
+                    $0.deleteButton.tintColor = UIColor.black
+                }) {
+                    $0.deleteButton.tintColor = $1 ? UIColor.white : UIColor.black
+                    }]
+            }
+            return tag
+        })
     }
     
     func switchSelect() {
@@ -274,7 +347,7 @@ class ViewController: UIViewController {
     
     func updateSelectedTagList() {
         selectedTagList.tags = tagList.selectedTagPresentables().map({ (tag) -> Tag in
-            Tag(content: TagPresentableText(tag.tag) {
+            Tag(content: TagPresentableText(tag: tag.tag) {
                 $0.label.font = UIFont.systemFont(ofSize: 16)
                 }, onInit: {
                     $0.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)

@@ -51,7 +51,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'TagList', '~> 0.2.0'
+    pod 'TagList', '~> 0.3.0'
 end
 ```
 
@@ -75,7 +75,7 @@ $ brew install carthage
 To integrate TagList into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "xiongxiong/TagList" ~> 0.2.0
+github "xiongxiong/TagList" ~> 0.3.0
 ```
 
 Run `carthage update` to build the framework and drag the built `TagList.framework` into your Xcode project.
@@ -190,7 +190,7 @@ view.separator.margin = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
 ```swift
 override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         tagList.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: areaList.frame.width, height: 0))
     }
 ```

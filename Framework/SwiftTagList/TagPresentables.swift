@@ -12,37 +12,39 @@ public struct TagPresentableText: TagPresentable {
     
     public private(set) var tag: String = ""
     public var isSelected: Bool = false
-    private var onContentInit: ((TagContentText) -> Void)?
+    private var onInit: ((TagContentText) -> Void)?
     
-    public init(_ tag: String, onContentInit: ((TagContentText) -> Void)? = nil) {
+    public init(tag: String, onInit: ((TagContentText) -> Void)? = nil) {
         self.tag = tag
-        self.onContentInit = onContentInit
+        self.onInit = onInit
     }
     
     public func createTagContent() -> TagContent {
         let tagContent = TagContentText(tag: tag)
-        onContentInit?(tagContent)
+        onInit?(tagContent)
         return tagContent
     }
 }
 
 public struct TagPresentableIcon: TagPresentable {
     
-    public private(set) var tag: String = ""
-    public private(set) var icon: String = ""
+    public private(set) var tag: String
+    public private(set) var icon: String
+    public private(set) var height: CGFloat
     public var isSelected: Bool = false
-    private var onContentInit: ((TagContentIcon) -> Void)?
+    private var onInit: ((TagContentIcon) -> Void)?
     
-    public init(_ tag: String, icon: String, onContentInit: ((TagContentIcon) -> Void)? = nil) {
+    public init(tag: String, icon: String, height: CGFloat, onInit: ((TagContentIcon) -> Void)? = nil) {
         self.tag = tag
         self.icon = icon
-        self.onContentInit = onContentInit
+        self.height = height
+        self.onInit = onInit
     }
     
     public func createTagContent() -> TagContent {
-        let tagContent = TagContentIcon(tag: tag)
+        let tagContent = TagContentIcon(tag: tag, height: height)
         tagContent.icon.image = UIImage(named: icon)
-        onContentInit?(tagContent)
+        onInit?(tagContent)
         return tagContent
     }
 }
@@ -53,18 +55,18 @@ public struct TagPresentableIconText: TagPresentable {
     public private(set) var tag: String = ""
     public private(set) var icon: String = ""
     public var isSelected: Bool = false
-    private var onContentInit: ((TagContentIconText) -> Void)?
+    private var onInit: ((TagContentIconText) -> Void)?
     
-    public init(_ tag: String, icon: String, onContentInit: ((TagContentIconText) -> Void)? = nil) {
+    public init(tag: String, icon: String, onInit: ((TagContentIconText) -> Void)? = nil) {
         self.tag = tag
         self.icon = icon
-        self.onContentInit = onContentInit
+        self.onInit = onInit
     }
     
     public func createTagContent() -> TagContent {
         let tagContent = TagContentIconText(tag: tag)
         tagContent.icon.image = UIImage(named: icon)
-        onContentInit?(tagContent)
+        onInit?(tagContent)
         return tagContent
     }
 }
