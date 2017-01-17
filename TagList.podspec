@@ -35,7 +35,7 @@ TagList, flexible tag list view, easy to use & extend. I love it.
     'Resources' => ['Framework/SwiftTagList/Assets.xcassets/**/*.png']
   }
 
-  s.public_header_files = 'TagList/**/*.h'
+  s.public_header_files = 'Framework/SwiftTagList/**/*.h'
   s.frameworks = 'UIKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
