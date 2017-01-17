@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftTagList
 
 class ViewController: UIViewController {
     
@@ -110,6 +111,8 @@ class ViewController: UIViewController {
         return view
     }()
     var areaListMask = UIView()
+    
+    var swiDelete: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,9 +220,18 @@ class ViewController: UIViewController {
                 $0.layer.borderColor = UIColor.cyan.cgColor
                 $0.layer.borderWidth = 2
                 $0.layer.cornerRadius = 5
+                $0.backgroundColor = UIColor.white
             }, onSelect: {
             $0.backgroundColor = $0.isSelected ? UIColor.orange : UIColor.white
         })
+        if swiDelete {
+            tag.wrappers = [TagWrapperRemover(onInit: {
+                $0.space = 8
+                $0.deleteButton.tintColor = UIColor.black
+            }) {
+                $0.deleteButton.tintColor = $1 ? UIColor.white : UIColor.black
+                }]
+        }
         tagList.tags.append(tag)
     }
     
@@ -235,10 +247,12 @@ class ViewController: UIViewController {
     }
     
     func switchDelete() {
+        swiDelete = switchDeleteBtn.isOn
         if switchDeleteBtn.isOn {
             tagList.tags.forEach { (tag) in
                 tag.wrappers = [TagWrapperRemover(onInit: {
                     $0.space = 8
+                    $0.deleteButton.tintColor = UIColor.black
                 }) {
                     $0.deleteButton.tintColor = $1 ? UIColor.white : UIColor.black
                     }]
@@ -257,6 +271,19 @@ class ViewController: UIViewController {
     func switchVerticalAlign() {
         tagList.verticalAlignment = [TagVerticalAlignment.top, TagVerticalAlignment.center, TagVerticalAlignment.bottom][alignHorizontalSegment.selectedSegmentIndex]
     }
+    
+    func updateSelectedTagList() {
+        selectedTagList.tags = tagList.selectedTagPresentables().map({ (tag) -> Tag in
+            Tag(content: TagPresentableText(tag.tag) {
+                $0.label.font = UIFont.systemFont(ofSize: 16)
+                }, onInit: {
+                    $0.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
+                    $0.layer.borderColor = UIColor.cyan.cgColor
+                    $0.layer.borderWidth = 2
+                    $0.layer.cornerRadius = 5
+            })
+        })
+    }
 }
 
 extension ViewController: TagListDelegate {
@@ -266,22 +293,12 @@ extension ViewController: TagListDelegate {
             areaSelected.contentSize = tagList.intrinsicContentSize
         } else {
             areaList.contentSize = tagList.intrinsicContentSize
+            updateSelectedTagList()
         }
     }
     
     func tagActionTriggered(tagList: TagList, action: TagAction, content: TagPresentable, index: Int) {
-        if tagList != selectedTagList {
-            selectedTagList.tags = tagList.selectedTagPresentables().map({ (tag) -> Tag in
-                Tag(content: TagPresentableText(tag.tag) {
-                    $0.label.font = UIFont.systemFont(ofSize: 16)
-                    }, onInit: {
-                        $0.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
-                        $0.layer.borderColor = UIColor.cyan.cgColor
-                        $0.layer.borderWidth = 2
-                        $0.layer.cornerRadius = 5
-                    })
-            })
-        }
+        print("=========  action -- \(action), content -- \(content.tag), index -- \(index)")
     }
 }
 

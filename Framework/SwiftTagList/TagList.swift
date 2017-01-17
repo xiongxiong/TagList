@@ -51,7 +51,14 @@ open class TagList: UIView {
         }
     }
     public var isAutowrap = true
-    public var selectionMode: TagSelectionMode = .none
+    public var selectionMode: TagSelectionMode = .none {
+        didSet {
+            tags.forEach({ (tag) in
+                tag.enableSelect = selectionMode != .none
+            })
+            delegate?.tagListUpdated(tagList: self)
+        }
+    }
 
     private var rows: [(tagViews: [UIView], height: CGFloat)] = []
     
@@ -278,13 +285,11 @@ open class TagList: UIView {
     func onTagTap(tag: Tag) {
         switch selectionMode {
         case .single:
-            if tag.isSelected {
-                tags.forEach({ (other) in
-                    if other != tag {
-                        other.isSelected = false
-                    }
-                })
-            }
+            tags.forEach({ (other) in
+                if other != tag {
+                    other.isSelected = false
+                }
+            })
         default:
             break
         }
@@ -299,18 +304,19 @@ extension TagList: TagDelegate {
     }
     
     func tagActionTriggered(tag: Tag, action: TagAction) {
-        if let index = index(of: tag) {
-            delegate?.tagActionTriggered(tagList: self, action: action, content: tag.content, index: index)
-        }
         switch action {
-        case .tap:
-            onTagTap(tag: tag)
         case .remove:
             if let index = index(of: tag) {
+                delegate?.tagActionTriggered(tagList: self, action: action, content: tag.content, index: index)
                 tags.remove(at: index)
             }
+        case .tap:
+            onTagTap(tag: tag)
+            fallthrough
         default:
-            break
+            if let index = index(of: tag) {
+                delegate?.tagActionTriggered(tagList: self, action: action, content: tag.content, index: index)
+            }
         }
     }
 }

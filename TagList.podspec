@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TagList'
-  s.version          = '0.2.11'
+  s.version          = '0.2.12'
   s.summary          = 'TagList, flexible tag list view, easy to use & extend.'
 
 # This description is used to generate tags and improve search results.
@@ -30,10 +30,10 @@ TagList, flexible tag list view, easy to use & extend. I love it.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'TagList/**/*.{h,swift}'
-  # s.resource_bundles = {
-  #   'Resources' => ['TagList/Media.xcassets/**/*.png']
-  # }
+  s.source_files = 'Framework/SwiftTagList/**/*.{h,swift}'
+  s.resource_bundles = {
+    'Resources' => ['Framework/SwiftTagList/Assets.xcassets/**/*.png']
+  }
 
   s.public_header_files = 'TagList/**/*.h'
   s.frameworks = 'UIKit'

@@ -83,7 +83,7 @@ public class TagContentIconText: TagContent {
         if let image = icon.image {
             if image.size.height != 0 {
                 let ratio = image.size.width / image.size.height
-                imageSize = CGSize(width: labelSize.height * ratio, height: labelSize.height)
+                imageSize = CGSize(width: labelSize.width + space + labelSize.height * ratio, height: labelSize.height)
             }
         }
         return CGSize(width: imageSize.width + labelSize.height + space, height: labelSize.height)

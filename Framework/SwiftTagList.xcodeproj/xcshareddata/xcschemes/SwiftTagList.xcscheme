@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0810"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4233BD641E06C0BB00BDB8C1"
+               BlueprintIdentifier = "428BF7C41E2DD62900E4945A"
                BuildableName = "SwiftTagList.framework"
                BlueprintName = "SwiftTagList"
-               ReferencedContainer = "container:TagList.xcodeproj">
+               ReferencedContainer = "container:SwiftTagList.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4233BD641E06C0BB00BDB8C1"
+            BlueprintIdentifier = "428BF7C41E2DD62900E4945A"
             BuildableName = "SwiftTagList.framework"
             BlueprintName = "SwiftTagList"
-            ReferencedContainer = "container:TagList.xcodeproj">
+            ReferencedContainer = "container:SwiftTagList.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4233BD641E06C0BB00BDB8C1"
+            BlueprintIdentifier = "428BF7C41E2DD62900E4945A"
             BuildableName = "SwiftTagList.framework"
             BlueprintName = "SwiftTagList"
-            ReferencedContainer = "container:TagList.xcodeproj">
+            ReferencedContainer = "container:SwiftTagList.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

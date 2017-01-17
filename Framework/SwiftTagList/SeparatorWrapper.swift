@@ -60,7 +60,7 @@ public class SeparatorWrapper: UIView {
 
 public struct SeparatorInfo {
     
-    var image: UIImage = UIImage()
-    var size: CGSize = CGSize.zero
-    var margin: UIEdgeInsets = UIEdgeInsets.zero
+    public var image: UIImage = UIImage()
+    public var size: CGSize = CGSize.zero
+    public var margin: UIEdgeInsets = UIEdgeInsets.zero
 }

@@ -20,14 +20,31 @@ open class Tag: UIView {
     weak var stateDelegate: TagStateDelegate?
     
     public private(set) var content: TagPresentable
-    public var wrappers: [TagWrapper] = []
-    public var padding: UIEdgeInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+    public var wrappers: [TagWrapper] = [] {
+        didSet {
+            update()
+        }
+    }
+    public var padding: UIEdgeInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3) {
+        didSet {
+            update()
+        }
+    }
+    public var enableSelect: Bool = true {
+        didSet {
+            update()
+        }
+    }
     public var isSelected: Bool {
         get {
             return content.isSelected
         }
         set {
-            content.isSelected = newValue
+            if isSelected != newValue {
+                content.isSelected = newValue
+                onSelect?(self)
+                update()
+            }
         }
     }
     
@@ -59,12 +76,6 @@ open class Tag: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func onTap() {
-        isSelected = !isSelected
-        update()
-        tagActionTriggered(action: .tap)
-    }
-    
     func update() {
         subviews.forEach { (view) in
             view.removeFromSuperview()
@@ -74,7 +85,6 @@ open class Tag: UIView {
         tagContent.actionDelegate = self
         stateDelegate = tagContent
         
-        onSelect?(self)
         stateDelegate?.tagSelected(isSelected)
         wrapped = TagWrapper().wrap(target: tagContent)
         wrapped = wrappers.reduce(wrapped) { (result, element) in
@@ -87,6 +97,15 @@ open class Tag: UIView {
         addConstraint(NSLayoutConstraint(item: wrapped, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
         delegate?.tagUpdated()
+    }
+    
+    func onTap() {
+        if enableSelect {
+            isSelected = !isSelected
+        } else {
+            isSelected = false
+        }
+        tagActionTriggered(action: .tap)
     }
 }
 

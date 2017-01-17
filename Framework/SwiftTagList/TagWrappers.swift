@@ -22,10 +22,11 @@ open class TagWrapperRemover: TagWrapper {
     public init(onInit: ((TagWrapperRemover) -> Void)? = nil, onSelect: ((TagWrapperRemover, Bool) -> Void)? = nil) {
         self.onSelect = onSelect
         super.init(frame: CGRect.zero)
-        onInit?(self)
         
         deleteButton.contentMode = .scaleAspectFit
+        deleteButton.setImage(UIImage(named: "icon_delete", in: Bundle(identifier: "com.wonderbear.SwiftTagList"), compatibleWith: UIScreen.main.traitCollection)?.withRenderingMode(.alwaysTemplate), for: .normal)
         deleteButton.addTarget(self, action: #selector(didRemove), for: .touchUpInside)
+        onInit?(self)
     }
     
     public required init?(coder aDecoder: NSCoder) {

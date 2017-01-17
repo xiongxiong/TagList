@@ -12,26 +12,47 @@
 		420671641DFF8C090075B70F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 420671621DFF8C090075B70F /* Main.storyboard */; };
 		420671661DFF8C090075B70F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 420671651DFF8C090075B70F /* Assets.xcassets */; };
 		420671691DFF8C090075B70F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 420671671DFF8C090075B70F /* LaunchScreen.storyboard */; };
-		420671721DFF92A60075B70F /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671711DFF92A60075B70F /* TagList.swift */; };
-		420671741DFF92B80075B70F /* TagContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671731DFF92B80075B70F /* TagContent.swift */; };
-		420671761DFF9EFA0075B70F /* TagWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671751DFF9EFA0075B70F /* TagWrapper.swift */; };
-		4226ABFA1E03B8D600AD40D2 /* TagContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABF91E03B8D600AD40D2 /* TagContents.swift */; };
-		4226ABFC1E03B90000AD40D2 /* TagPresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABFB1E03B90000AD40D2 /* TagPresentables.swift */; };
-		4226ABFE1E03B92A00AD40D2 /* TagWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */; };
-		4233BD691E06C0BB00BDB8C1 /* TagList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4233BD671E06C0BB00BDB8C1 /* TagList.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4233BD6E1E06C0D200BDB8C1 /* SeparatorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */; };
-		4233BD6F1E06C0D200BDB8C1 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AF1F431E01124F0048417E /* Tag.swift */; };
-		4233BD701E06C0D200BDB8C1 /* TagContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671731DFF92B80075B70F /* TagContent.swift */; };
-		4233BD711E06C0D200BDB8C1 /* TagContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABF91E03B8D600AD40D2 /* TagContents.swift */; };
-		4233BD721E06C0D200BDB8C1 /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671711DFF92A60075B70F /* TagList.swift */; };
-		4233BD731E06C0D200BDB8C1 /* TagPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F123701E02605C00CA0DED /* TagPresentable.swift */; };
-		4233BD741E06C0D200BDB8C1 /* TagPresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABFB1E03B90000AD40D2 /* TagPresentables.swift */; };
-		4233BD751E06C0D200BDB8C1 /* TagWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420671751DFF9EFA0075B70F /* TagWrapper.swift */; };
-		4233BD761E06C0D200BDB8C1 /* TagWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */; };
-		42AF1F441E01124F0048417E /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AF1F431E01124F0048417E /* Tag.swift */; };
-		42F1236F1E02602F00CA0DED /* SeparatorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */; };
-		42F123711E02605C00CA0DED /* TagPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F123701E02605C00CA0DED /* TagPresentable.swift */; };
+		428BF7EE1E2DD78700E4945A /* SwiftTagList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428BF7D51E2DD64100E4945A /* SwiftTagList.framework */; };
+		428BF7EF1E2DD78700E4945A /* SwiftTagList.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 428BF7D51E2DD64100E4945A /* SwiftTagList.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		428BF7D41E2DD64100E4945A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 428BF7D01E2DD64100E4945A /* SwiftTagList.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 428BF7C51E2DD62900E4945A;
+			remoteInfo = SwiftTagList;
+		};
+		428BF7EC1E2DD76500E4945A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 428BF7D01E2DD64100E4945A /* SwiftTagList.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 428BF7C41E2DD62900E4945A;
+			remoteInfo = SwiftTagList;
+		};
+		428BF7F01E2DD78700E4945A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 428BF7D01E2DD64100E4945A /* SwiftTagList.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 428BF7C41E2DD62900E4945A;
+			remoteInfo = SwiftTagList;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		428BF7F21E2DD78700E4945A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				428BF7EF1E2DD78700E4945A /* SwiftTagList.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4206715B1DFF8C090075B70F /* TagListDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TagListDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,18 +62,7 @@
 		420671651DFF8C090075B70F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		420671681DFF8C090075B70F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4206716A1DFF8C090075B70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		420671711DFF92A60075B70F /* TagList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
-		420671731DFF92B80075B70F /* TagContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagContent.swift; sourceTree = "<group>"; };
-		420671751DFF9EFA0075B70F /* TagWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagWrapper.swift; sourceTree = "<group>"; };
-		4226ABF91E03B8D600AD40D2 /* TagContents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagContents.swift; sourceTree = "<group>"; };
-		4226ABFB1E03B90000AD40D2 /* TagPresentables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPresentables.swift; sourceTree = "<group>"; };
-		4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagWrappers.swift; sourceTree = "<group>"; };
-		4233BD651E06C0BB00BDB8C1 /* SwiftTagList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftTagList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4233BD671E06C0BB00BDB8C1 /* TagList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagList.h; sourceTree = "<group>"; };
-		4233BD681E06C0BB00BDB8C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		42AF1F431E01124F0048417E /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorWrapper.swift; sourceTree = "<group>"; };
-		42F123701E02605C00CA0DED /* TagPresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPresentable.swift; sourceTree = "<group>"; };
+		428BF7D01E2DD64100E4945A /* SwiftTagList.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftTagList.xcodeproj; path = ../Framework/SwiftTagList.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,13 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4233BD611E06C0BB00BDB8C1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				428BF7EE1E2DD78700E4945A /* SwiftTagList.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +80,8 @@
 		420671521DFF8C090075B70F = {
 			isa = PBXGroup;
 			children = (
+				428BF7D01E2DD64100E4945A /* SwiftTagList.xcodeproj */,
 				4206715D1DFF8C090075B70F /* TagListDemo */,
-				4233BD661E06C0BB00BDB8C1 /* TagList */,
 				4206715C1DFF8C090075B70F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				4206715B1DFF8C090075B70F /* TagListDemo.app */,
-				4233BD651E06C0BB00BDB8C1 /* SwiftTagList.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,7 +97,6 @@
 		4206715D1DFF8C090075B70F /* TagListDemo */ = {
 			isa = PBXGroup;
 			children = (
-				420671701DFF909C0075B70F /* TagList */,
 				4206715E1DFF8C090075B70F /* AppDelegate.swift */,
 				420671601DFF8C090075B70F /* ViewController.swift */,
 				420671621DFF8C090075B70F /* Main.storyboard */,
@@ -106,43 +108,15 @@
 			path = TagList;
 			sourceTree = "<group>";
 		};
-		420671701DFF909C0075B70F /* TagList */ = {
+		428BF7D11E2DD64100E4945A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42F1236E1E02602F00CA0DED /* SeparatorWrapper.swift */,
-				42AF1F431E01124F0048417E /* Tag.swift */,
-				420671731DFF92B80075B70F /* TagContent.swift */,
-				4226ABF91E03B8D600AD40D2 /* TagContents.swift */,
-				420671711DFF92A60075B70F /* TagList.swift */,
-				42F123701E02605C00CA0DED /* TagPresentable.swift */,
-				4226ABFB1E03B90000AD40D2 /* TagPresentables.swift */,
-				420671751DFF9EFA0075B70F /* TagWrapper.swift */,
-				4226ABFD1E03B92A00AD40D2 /* TagWrappers.swift */,
+				428BF7D51E2DD64100E4945A /* SwiftTagList.framework */,
 			);
-			name = TagList;
-			sourceTree = "<group>";
-		};
-		4233BD661E06C0BB00BDB8C1 /* TagList */ = {
-			isa = PBXGroup;
-			children = (
-				4233BD671E06C0BB00BDB8C1 /* TagList.h */,
-				4233BD681E06C0BB00BDB8C1 /* Info.plist */,
-			);
-			path = TagList;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		4233BD621E06C0BB00BDB8C1 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4233BD691E06C0BB00BDB8C1 /* TagList.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		4206715A1DFF8C090075B70F /* TagListDemo */ = {
@@ -152,33 +126,18 @@
 				420671571DFF8C090075B70F /* Sources */,
 				420671581DFF8C090075B70F /* Frameworks */,
 				420671591DFF8C090075B70F /* Resources */,
+				428BF7F21E2DD78700E4945A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				428BF7ED1E2DD76500E4945A /* PBXTargetDependency */,
+				428BF7F11E2DD78700E4945A /* PBXTargetDependency */,
 			);
 			name = TagListDemo;
 			productName = TagList;
 			productReference = 4206715B1DFF8C090075B70F /* TagListDemo.app */;
 			productType = "com.apple.product-type.application";
-		};
-		4233BD641E06C0BB00BDB8C1 /* SwiftTagList */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4233BD6A1E06C0BB00BDB8C1 /* Build configuration list for PBXNativeTarget "SwiftTagList" */;
-			buildPhases = (
-				4233BD601E06C0BB00BDB8C1 /* Sources */,
-				4233BD611E06C0BB00BDB8C1 /* Frameworks */,
-				4233BD621E06C0BB00BDB8C1 /* Headers */,
-				4233BD631E06C0BB00BDB8C1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SwiftTagList;
-			productName = TagList;
-			productReference = 4233BD651E06C0BB00BDB8C1 /* SwiftTagList.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -195,13 +154,9 @@
 						DevelopmentTeam = M793737CLS;
 						ProvisioningStyle = Automatic;
 					};
-					4233BD641E06C0BB00BDB8C1 = {
-						CreatedOnToolsVersion = 8.1;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
-			buildConfigurationList = 420671561DFF8C090075B70F /* Build configuration list for PBXProject "TagList" */;
+			buildConfigurationList = 420671561DFF8C090075B70F /* Build configuration list for PBXProject "TagListDemo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -212,13 +167,28 @@
 			mainGroup = 420671521DFF8C090075B70F;
 			productRefGroup = 4206715C1DFF8C090075B70F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 428BF7D11E2DD64100E4945A /* Products */;
+					ProjectRef = 428BF7D01E2DD64100E4945A /* SwiftTagList.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				4206715A1DFF8C090075B70F /* TagListDemo */,
-				4233BD641E06C0BB00BDB8C1 /* SwiftTagList */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		428BF7D51E2DD64100E4945A /* SwiftTagList.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftTagList.framework;
+			remoteRef = 428BF7D41E2DD64100E4945A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		420671591DFF8C090075B70F /* Resources */ = {
@@ -231,13 +201,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4233BD631E06C0BB00BDB8C1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -245,37 +208,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				420671741DFF92B80075B70F /* TagContent.swift in Sources */,
-				420671721DFF92A60075B70F /* TagList.swift in Sources */,
-				4226ABFC1E03B90000AD40D2 /* TagPresentables.swift in Sources */,
-				420671761DFF9EFA0075B70F /* TagWrapper.swift in Sources */,
-				42F1236F1E02602F00CA0DED /* SeparatorWrapper.swift in Sources */,
-				42AF1F441E01124F0048417E /* Tag.swift in Sources */,
-				4226ABFA1E03B8D600AD40D2 /* TagContents.swift in Sources */,
-				4226ABFE1E03B92A00AD40D2 /* TagWrappers.swift in Sources */,
 				420671611DFF8C090075B70F /* ViewController.swift in Sources */,
-				42F123711E02605C00CA0DED /* TagPresentable.swift in Sources */,
 				4206715F1DFF8C090075B70F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4233BD601E06C0BB00BDB8C1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4233BD6E1E06C0D200BDB8C1 /* SeparatorWrapper.swift in Sources */,
-				4233BD6F1E06C0D200BDB8C1 /* Tag.swift in Sources */,
-				4233BD701E06C0D200BDB8C1 /* TagContent.swift in Sources */,
-				4233BD711E06C0D200BDB8C1 /* TagContents.swift in Sources */,
-				4233BD721E06C0D200BDB8C1 /* TagList.swift in Sources */,
-				4233BD731E06C0D200BDB8C1 /* TagPresentable.swift in Sources */,
-				4233BD741E06C0D200BDB8C1 /* TagPresentables.swift in Sources */,
-				4233BD751E06C0D200BDB8C1 /* TagWrapper.swift in Sources */,
-				4233BD761E06C0D200BDB8C1 /* TagWrappers.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		428BF7ED1E2DD76500E4945A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftTagList;
+			targetProxy = 428BF7EC1E2DD76500E4945A /* PBXContainerItemProxy */;
+		};
+		428BF7F11E2DD78700E4945A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftTagList;
+			targetProxy = 428BF7F01E2DD78700E4945A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		420671621DFF8C090075B70F /* Main.storyboard */ = {
@@ -393,11 +344,12 @@
 		4206716E1DFF8C090075B70F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M793737CLS;
 				INFOPLIST_FILE = TagList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderbear.TagList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wonderbear.TagListDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -407,65 +359,22 @@
 		4206716F1DFF8C090075B70F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M793737CLS;
 				INFOPLIST_FILE = TagList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderbear.TagList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wonderbear.TagListDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
-		4233BD6B1E06C0BB00BDB8C1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = TagList/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderbear.TagList;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		4233BD6C1E06C0BB00BDB8C1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = TagList/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderbear.TagList;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		420671561DFF8C090075B70F /* Build configuration list for PBXProject "TagList" */ = {
+		420671561DFF8C090075B70F /* Build configuration list for PBXProject "TagListDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4206716B1DFF8C090075B70F /* Debug */,
@@ -479,15 +388,6 @@
 			buildConfigurations = (
 				4206716E1DFF8C090075B70F /* Debug */,
 				4206716F1DFF8C090075B70F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4233BD6A1E06C0BB00BDB8C1 /* Build configuration list for PBXNativeTarget "SwiftTagList" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4233BD6B1E06C0BB00BDB8C1 /* Debug */,
-				4233BD6C1E06C0BB00BDB8C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
